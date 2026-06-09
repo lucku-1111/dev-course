@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-임    <list default="true" id="62b007dd-b463-4f61-8f1c-e73f4742480d" name="변경" comment="" />
+    <list default="true" id="62b007dd-b463-4f61-8f1c-e73f4742480d" name="변경" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -34,21 +34,21 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
-    "codeWithMe.voiceChat.enabledByDefault": "false",
-    "git-widget-placeholder": "main",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/Users/lucku/Programming/dev-course",
-    "settings.editor.selected.configurable": "project.propVCSSupport.DirectoryMappings",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
+    &quot;codeWithMe.voiceChat.enabledByDefault&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/lucku/Programming/dev-course&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;project.propVCSSupport.DirectoryMappings&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$" />
@@ -78,6 +78,7 @@
       <updated>1780970267796</updated>
       <workItem from="1780970268803" duration="2093000" />
       <workItem from="1780976254827" duration="356000" />
+      <workItem from="1780985634838" duration="1432000" />
     </task>
     <task id="LOCAL-00001" summary="파일 재배치">
       <option name="closed" value="true" />
@@ -111,7 +112,31 @@
       <option name="project" value="LOCAL" />
       <updated>1780976581355</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="과제1 static 제거하기&#10;- static 키워드를 제거해 힙 영역에서 객체가 상태를 제어하기 때문에 더 객체지향적임">
+      <option name="closed" value="true" />
+      <created>1780985782882</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1780985782882</updated>
+    </task>
+    <task id="LOCAL-00006" summary=".">
+      <option name="closed" value="true" />
+      <created>1780985808407</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1780985808407</updated>
+    </task>
+    <task id="LOCAL-00007" summary="과제1 오늘 강의 내용 복습">
+      <option name="closed" value="true" />
+      <created>1780987215731</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1780987215731</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -126,6 +151,9 @@
     <MESSAGE value="Merge remote-tracking branch 'origin/main'&#10;&#10;# Conflicts:&#10;#&#9;.gitignore" />
     <MESSAGE value="first commit" />
     <MESSAGE value="파일 재배치" />
-    <option name="LAST_COMMIT_MESSAGE" value="파일 재배치" />
+    <MESSAGE value="과제1 static 제거하기&#10;- static 키워드를 제거해 힙 영역에서 객체가 상태를 제어하기 때문에 더 객체지향적임" />
+    <MESSAGE value="." />
+    <MESSAGE value="과제1 오늘 강의 내용 복습" />
+    <option name="LAST_COMMIT_MESSAGE" value="과제1 오늘 강의 내용 복습" />
   </component>
 </project>
