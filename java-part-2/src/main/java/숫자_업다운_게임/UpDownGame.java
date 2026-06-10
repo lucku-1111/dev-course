@@ -1,3 +1,5 @@
+package 숫자_업다운_게임;
+
 import java.util.Random;
 import java.util.Scanner;
 

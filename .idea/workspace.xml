@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="62b007dd-b463-4f61-8f1c-e73f4742480d" name="변경" comment="" />
+    <list default="true" id="62b007dd-b463-4f61-8f1c-e73f4742480d" name="변경" comment="과제2 숫자 업다운 게임 만들기 구현">
+      <change beforePath="$PROJECT_DIR$/java-part-2/src/main/java/UpDownGame.java" beforeDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -78,7 +80,7 @@
       <updated>1780970267796</updated>
       <workItem from="1780970268803" duration="2093000" />
       <workItem from="1780976254827" duration="356000" />
-      <workItem from="1780985634838" duration="1432000" />
+      <workItem from="1780985634838" duration="3019000" />
     </task>
     <task id="LOCAL-00001" summary="파일 재배치">
       <option name="closed" value="true" />
@@ -136,7 +138,23 @@
       <option name="project" value="LOCAL" />
       <updated>1780987215731</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="과제2 숫자 업다운 게임 만들기 구현">
+      <option name="closed" value="true" />
+      <created>1781040057911</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1781040057911</updated>
+    </task>
+    <task id="LOCAL-00009" summary="과제2 숫자 업다운 게임 만들기 구현">
+      <option name="closed" value="true" />
+      <created>1781040061944</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1781040061944</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -154,6 +172,7 @@
     <MESSAGE value="과제1 static 제거하기&#10;- static 키워드를 제거해 힙 영역에서 객체가 상태를 제어하기 때문에 더 객체지향적임" />
     <MESSAGE value="." />
     <MESSAGE value="과제1 오늘 강의 내용 복습" />
-    <option name="LAST_COMMIT_MESSAGE" value="과제1 오늘 강의 내용 복습" />
+    <MESSAGE value="과제2 숫자 업다운 게임 만들기 구현" />
+    <option name="LAST_COMMIT_MESSAGE" value="과제2 숫자 업다운 게임 만들기 구현" />
   </component>
 </project>
