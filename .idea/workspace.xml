@@ -1,8 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="62b007dd-b463-4f61-8f1c-e73f4742480d" name="변경" comment="260610 과제1 학습 완료">
-      <change afterPath="$PROJECT_DIR$/운영체제/4.CPU 스케줄링-1.md" afterDir="false" />
+    <list default="true" id="62b007dd-b463-4f61-8f1c-e73f4742480d" name="변경" comment="260610 과제4 CPU 스케줄링 학습">
+      <change afterPath="$PROJECT_DIR$/java-part-2/src/main/java/G_card.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/java-part-2/src/main/java/G_circle.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/java-part-2/src/main/java/G_deck.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/java-part-2/src/main/java/G_point.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/java-part-2/src/main/java/G_shape.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/java-part-2/src/main/java/G_triangle.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/java-part-2/src/main/java/K_polymorphism.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/java-part-2/src/main/java/L_abstract.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/java-part-2/src/main/java/L_cidar.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/java-part-2/src/main/java/L_coke.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/java-part-2/src/main/java/L_drink.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/java-part-2/src/main/java/L_fanta.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/java-part-2/src/main/java/L_start.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/java-part-2/src/main/java/L_vendingmachine.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/java-part-2/src/main/java/L_water.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/java-part-2/src/main/java/M_cidar.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/java-part-2/src/main/java/M_coke.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/java-part-2/src/main/java/M_drink.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/java-part-2/src/main/java/M_fanta.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/java-part-2/src/main/java/M_interface.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/java-part-2/src/main/java/M_start.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/java-part-2/src/main/java/M_vending_machine.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/java-part-2/src/main/java/M_water.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/java-part-2/src/main/java/G_card_play.java" beforeDir="false" afterPath="$PROJECT_DIR$/java-part-2/src/main/java/G_card_play.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/java-part-2/src/main/java/G_draw_shape.java" beforeDir="false" afterPath="$PROJECT_DIR$/java-part-2/src/main/java/G_draw_shape.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -82,7 +106,7 @@
       <updated>1780970267796</updated>
       <workItem from="1780970268803" duration="2093000" />
       <workItem from="1780976254827" duration="356000" />
-      <workItem from="1780985634838" duration="4305000" />
+      <workItem from="1780985634838" duration="7862000" />
     </task>
     <task id="LOCAL-00001" summary="파일 재배치">
       <option name="closed" value="true" />
@@ -164,7 +188,39 @@
       <option name="project" value="LOCAL" />
       <updated>1781069460522</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="260610 과제2 반려동물 키우기 구현">
+      <option name="closed" value="true" />
+      <created>1781071684143</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1781071684143</updated>
+    </task>
+    <task id="LOCAL-00012" summary="gitignore 추가">
+      <option name="closed" value="true" />
+      <created>1781071768779</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1781071768779</updated>
+    </task>
+    <task id="LOCAL-00013" summary="260610 과제2 텍스트 RPG 구현">
+      <option name="closed" value="true" />
+      <created>1781081542920</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1781081542920</updated>
+    </task>
+    <task id="LOCAL-00014" summary="260610 과제4 CPU 스케줄링 학습">
+      <option name="closed" value="true" />
+      <created>1781081568648</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1781081568648</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -175,7 +231,6 @@
       <path value="$PROJECT_DIR$/java-part-1" />
       <path value="$PROJECT_DIR$/java-part-2" />
     </ignored-roots>
-    <MESSAGE value="gitignore 추가" />
     <MESSAGE value="Merge remote-tracking branch 'origin/main'&#10;&#10;# Conflicts:&#10;#&#9;.gitignore" />
     <MESSAGE value="first commit" />
     <MESSAGE value="파일 재배치" />
@@ -184,6 +239,10 @@
     <MESSAGE value="과제1 오늘 강의 내용 복습" />
     <MESSAGE value="과제2 숫자 업다운 게임 만들기 구현" />
     <MESSAGE value="260610 과제1 학습 완료" />
-    <option name="LAST_COMMIT_MESSAGE" value="260610 과제1 학습 완료" />
+    <MESSAGE value="260610 과제2 반려동물 키우기 구현" />
+    <MESSAGE value="gitignore 추가" />
+    <MESSAGE value="260610 과제2 텍스트 RPG 구현" />
+    <MESSAGE value="260610 과제4 CPU 스케줄링 학습" />
+    <option name="LAST_COMMIT_MESSAGE" value="260610 과제4 CPU 스케줄링 학습" />
   </component>
 </project>
