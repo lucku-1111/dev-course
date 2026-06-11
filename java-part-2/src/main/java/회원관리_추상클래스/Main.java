@@ -3,6 +3,7 @@ package 회원관리_추상클래스;
 import java.util.Scanner;
 
 public class Main {
+
     static Scanner sc = new Scanner(System.in);
 
     public static int printMenu(MemberManager manager) {
