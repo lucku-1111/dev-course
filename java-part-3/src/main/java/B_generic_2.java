@@ -53,7 +53,7 @@ public class B_generic_2 <T extends Number> {
         throw new UnsupportedOperationException("지원되지 않는 타입입니다.");
     }
 
-    static void main(String[] args) {
+    public static void main(String[] args) {
         B_generic_2<Integer> intCalculator = new B_generic_2<>();
         System.out.println("Integer Addition: " + intCalculator.add(10, 20));
         System.out.println("Integer Subtraction: " + intCalculator.subtract(20, 10));

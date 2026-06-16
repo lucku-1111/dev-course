@@ -21,7 +21,7 @@ public class B_generic<T> {
         return item;
     }
 
-    static void main(String[] args) {
+    public static void main(String[] args) {
         B_generic<Integer> intBox = new B_generic<>();
         intBox.set(10);
         System.out.println("Integer value: " + intBox.get());
