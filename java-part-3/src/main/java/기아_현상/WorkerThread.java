@@ -10,6 +10,7 @@ public class WorkerThread extends Thread {
         this.name = name;
     }
 
+    @Override
     public void run() {
         while (true) {
             resource.waitForResource(name);
