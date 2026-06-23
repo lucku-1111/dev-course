@@ -1,0 +1,56 @@
+package com.example.spring.springtheory.ch01.ex_1_6;
+
+// * 싱글톤 레지스트리와 오브젝트 스코프
+// 애플리케이션 컨텍스트는 싱글톤을 저장하고 관리하는 싱글톤레지트리 이기도 하다.
+// 스프링은 기본적으로 별다른 설정을 하지 않으면 내부적으로 빈 오브젝트를 모두 싱글톤으로 만든다.
+// 태생적으로 스프링은 엔터프라이즈 시스템을 위해 고안된 기술이기 때문에 서버 환경에서 사용될 때 그 가치가 있다.
+// 매번 클라이언트에서 요청이 올 때마다 각 로직을 담당하는  오브젝트를 새로 만들어서 사용한다고 생각하면,
+// 요청 한 번에 5개의 오브젝트가 새로 만들어지고 초당 500개 요청이 들어오면, 초당 2500개의 새로운 오브젝트가 생성된다.
+// 1분이면 15만 개, 한 시간이면 9백만 개의 새로운 오브젝트가 만들어진다.
+// 아무리 자바의 오브젝트 생성과 가비지 컬렉션(GC)의 성능이 좋아졌다고 한들 이렇게 부하가 걸리면 서버가 감당하기 힘들다.
+
+// 그래서 엔터프라이즈 분야에서 서비스 오브젝트라는 개념을 일찍부터 사용해왔다.
+// 서블릿은 자바 엔터프라이즈 기술의 가장 기본이 되는 서비스 오브젝트라고 할 수 있다.
+// 서블릿은 대부분 멀티스레드 환경에서 싱글톤으로 동작한다.
+// 서블릿 클래스당 하나의 오브젝트만 만들어두고, 사용자의 요청을 담당하는 여러 스레드에서
+// 하나의 오브젝트를 동시에 사용한다.
+
+// [쉽게 풀어보기]
+// - 웹 서버에는 사용자가 동시에 수백~수천 명 들어온다.
+//   보통 "요청 1개당 스레드(일꾼) 1개"를 배정해 동시에 처리한다.
+// - 이때 요청마다 오브젝트를 new로 새로 만들면, 요청 1만 개에 오브젝트 1만 개 -> 메모리/GC 폭발.
+// - 그런데 서블릿/DAO 같은 '서비스 오브젝트'는 "기능(로직)만 제공하는 도구"일 뿐,
+//   사용자별로 따로 보관할 데이터가 없다. 그래서 사람마다 새로 만들 이유가 없다.
+//   -> 클래스당 딱 1개(싱글톤)만 만들어 두고 여러 스레드가 공유해서 쓴다.
+//
+//   비유) ATM 한 대(=서블릿 오브젝트)를 여러 손님(=스레드)이 같이 쓰는 것과 같다.
+//        ATM은 출금/입금 '기능'만 제공할 뿐, 특정 손님의 돈을 자기 안에 보관하지 않는다.
+//
+// [주의] 하나를 여러 스레드가 공유하므로, 사용자/요청별 데이터를 오브젝트 필드(인스턴스 변수)에
+//   저장하면 안 된다. 거의 동시에 실행되는 다른 스레드가 그 값을 덮어써서 데이터가 엉킨다.
+//   -> 서비스 오브젝트는 상태를 갖지 않는 '무상태(stateless)'로 만들어야 한다.
+//      · 가능: 읽기 전용 값, 다른 싱글톤에 대한 참조(예: UserDAO가 ConnectionMaker를 필드로 가짐)
+//      · 위험: 특정 요청의 사용자 정보, 처리 중간값 -> 필드 대신 '지역변수/파라미터'로 다룬다.
+//        (지역변수는 스레드마다 따로 생기므로 서로 섞이지 않는다)
+
+import com.example.spring.springtheory.ch01.ex_1_6.dao.DaoFactory;
+import com.example.spring.springtheory.ch01.ex_1_6.dao.UserDAO;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+
+public class Start {
+    static void main(String[] args) {
+        DaoFactory factory = new DaoFactory();
+        UserDAO userDAO1 = factory.userDAO();
+        UserDAO userDAO2 = factory.userDAO();
+
+        System.out.println(userDAO1);
+        System.out.println(userDAO2);
+
+        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(DaoFactory.class);
+        UserDAO userDAO3 = context.getBean("userDAO", UserDAO.class);
+        UserDAO userDAO4 = context.getBean("userDAO", UserDAO.class);
+
+        System.out.println(userDAO3);
+        System.out.println(userDAO4);
+    }
+}
