@@ -1,29 +1,19 @@
 package com.example.spring.springtheory.ch01.ex_1_5.dao;
 
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+// DaoFactory를 스프링 빈 팩토리가 사용할 수 있는 설정정보로 리팩토링
+@Configuration // 애플리케이션 컨텍스트 또는 빈 팩토리가 사용할 설정 정보라는 표시
 public class DaoFactory {
 
+    @Bean // 오브젝트 생성을 담당하는 IoC용 메서드라는 표시
     public UserDAO userDAO() {
-//        SimpleConnectionMaker connection = new DConnectionMaker();
-//        UserDAO userDAO = new UserDAO(connection);
-
         return new UserDAO(connectionMaker());
     }
 
-    public AccountDAO accountDAO() {
-//        SimpleConnectionMaker connection = new DConnectionMaker();
-//        AccountDAO accountDAO = new AccountDAO(connection);
-
-        return new AccountDAO(connectionMaker());
-    }
-
-    public MessageDAO messageDAO() {
-//        SimpleConnectionMaker connection = new DConnectionMaker();
-//        MessageDAO messageDAO = new MessageDAO(connection);
-
-        return new MessageDAO(connectionMaker());
-    }
-
-    private SimpleConnectionMaker connectionMaker() {
+    @Bean
+    public SimpleConnectionMaker connectionMaker() {
         return new DConnectionMaker();
     }
 
