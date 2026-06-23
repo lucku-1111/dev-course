@@ -1,10 +1,14 @@
 package com.example.spring.springtheory.ch01.ex_1_6;
 
+import com.example.spring.springtheory.ch01.ex_1_6.dao.DaoFactory;
+import com.example.spring.springtheory.ch01.ex_1_6.dao.UserDAO;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+
 // * 싱글톤 레지스트리와 오브젝트 스코프
 // 애플리케이션 컨텍스트는 싱글톤을 저장하고 관리하는 싱글톤레지트리 이기도 하다.
 // 스프링은 기본적으로 별다른 설정을 하지 않으면 내부적으로 빈 오브젝트를 모두 싱글톤으로 만든다.
 // 태생적으로 스프링은 엔터프라이즈 시스템을 위해 고안된 기술이기 때문에 서버 환경에서 사용될 때 그 가치가 있다.
-// 매번 클라이언트에서 요청이 올 때마다 각 로직을 담당하는 오브젝트를 새로 만들어서 사용한다고 생각하면,
+// 매번 클라이언트에서 요청이 올 때마다 각 로직을 담당하는  오브젝트를 새로 만들어서 사용한다고 생각하면,
 // 요청 한 번에 5개의 오브젝트가 새로 만들어지고 초당 500개 요청이 들어오면, 초당 2500개의 새로운 오브젝트가 생성된다.
 // 1분이면 15만 개, 한 시간이면 9백만 개의 새로운 오브젝트가 만들어진다.
 // 아무리 자바의 오브젝트 생성과 가비지 컬렉션(GC)의 성능이 좋아졌다고 한들 이렇게 부하가 걸리면 서버가 감당하기 힘들다.
@@ -36,19 +40,19 @@ package com.example.spring.springtheory.ch01.ex_1_6;
 // * 스프링 빈의 스코프
 // 스프링이 관리하는 오브젝트, 즉 빈이 생성되고, 존재하고, 적용되는 범위를 빈의 스코프라고 한다.
 // 스프링 빈의 기본 스코프는 싱글톤이다.
-// 싱글톤 스코프는 컨테이너 내에 한 개의 오브젝트만 만들어져서, 강제로 제거하지 않는 한 스프링 컨테이너가 존재하는 동안 계속 유지된다.
+// 싱글톤 스코프는 컨테이너 내에 한 개의 오브젝트만 만들어져서, 강제로 제거하지 않는 한 스프링 컨테이너가 존재하는 동안 계속 유지 된다.
 // 경우에 따라서는 싱글톤 외의 스코프를 가질 수 있다.
-// 웹을 통해 새로운 HTTP요청이 생길 때마다 생성되는 요청 스코프가 있다.
+// 웹을 통해 새로운 HTTP요청이 생길 때마다 생성되는 요청스코프가 있다.
 
 // 요청이 몰리면 "대기하나?"에 대한 답
 // 대기 여부는 빈 스코프가 아니라 스레드가(일꾼) 수가 결정한다.
 //
 //  ┌────────────────────────┬─────────────────────────────────────────┐
-//  │          구분           │                 무엇이 정하나               │
+//  │          구분          │              무엇이 정하나              │
 //  ├────────────────────────┼─────────────────────────────────────────┤
-//  │ 빈이 새로 만들어지는가       │ 스코프가 결정 (request면 요청마다 새로)        │
+//  │ 빈이 새로 만들어지는가 │ 스코프가 결정 (request면 요청마다 새로) │
 //  ├────────────────────────┼─────────────────────────────────────────┤
-//  │ 요청이 대기하는가           │ WAS의 스레드 풀 크기가 결정                  │
+//  │ 요청이 대기하는가      │ WAS의 스레드 풀 크기가 결정             │
 //  └────────────────────────┴─────────────────────────────────────────┘
 //
 //  - WAS(톰캣 등)는 스레드 풀을 둔다 (예: 기본 200개).
@@ -58,16 +62,13 @@ package com.example.spring.springtheory.ch01.ex_1_6;
 // 싱글톤과의 대비
 //  - 싱글톤: 클래스당 1개를 모두가 공유 → 그래서 상태(필드)를 가지면 안 됨(무상태 원칙).
 //  - 요청 스코프: 요청마다 독립된 빈 → 그 요청 동안의 상태를 안전하게 담아도 됨 (다른 요청과 안 섞임).
-//
+
 //  요약: 요청이 몰리면 요청 스코프 빈은 계속 새로 생성되고(대기 X), 정작 대기가 생긴다면 그건 스코프가 아니라 서버 스레드 풀이 꽉 찼기 때문입니다
 
 
-import com.example.spring.springtheory.ch01.ex_1_6.dao.DaoFactory;
-import com.example.spring.springtheory.ch01.ex_1_6.dao.UserDAO;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-
 public class Start {
     static void main(String[] args) {
+
         DaoFactory factory = new DaoFactory();
         UserDAO userDAO1 = factory.userDAO();
         UserDAO userDAO2 = factory.userDAO();
@@ -81,5 +82,6 @@ public class Start {
 
         System.out.println(userDAO3);
         System.out.println(userDAO4);
+
     }
 }
