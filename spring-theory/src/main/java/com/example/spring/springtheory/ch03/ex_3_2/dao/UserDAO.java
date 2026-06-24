@@ -25,31 +25,23 @@ public class UserDAO {
         this.simpleConnectionMaker = simpleConnectionMaker;
     }
 
-    protected UserDAO() {
-    }
-
-    public void add(User user) throws ClassNotFoundException, SQLException {
-
-        String query = "INSERT INTO users (id, name, password) VALUES (?, ?, ?)";
-
+    // 컨텍스트: 변하지 않는 JDBC 작업의 공통 흐름
+    //  - 커넥션을 얻고, 전달받은 '전략'에게 statement 생성을 맡기고, 실행하고, 자원을 정리한다.
+    //  - 어떤 SQL을 실행할지는 전혀 모른다. 그건 strategy가 결정한다(인터페이스에만 의존).
+    public void jdbcContextWithStatementStrategy(StatementStrategy statementStrategy) throws SQLException, ClassNotFoundException {
         try (
                 Connection conn = simpleConnectionMaker.makeNewConnection();
-                PreparedStatement pstmt = conn.prepareStatement(query);
-                ) {
-            pstmt.setString(1, user.getId());
-            pstmt.setString(2, user.getName());
-            pstmt.setString(3, user.getPassword());
-            pstmt.executeUpdate();
-        }
-
-    }
-
-    public void deleteAll() throws SQLException, ClassNotFoundException {
-        try (
-                Connection conn = simpleConnectionMaker.makeNewConnection();
-                PreparedStatement pstmt = makeStatement(conn);
+                PreparedStatement pstmt = statementStrategy.makeStatement(conn); // 변하는 부분을 전략에 위임
         ) {
             pstmt.executeUpdate();
         }
+    }
+
+    public void add(User user) throws ClassNotFoundException, SQLException {
+        jdbcContextWithStatementStrategy(new UserDAOAdd(user));
+    }
+
+    public void deleteAll() throws SQLException, ClassNotFoundException {
+        jdbcContextWithStatementStrategy(new UserDAODeleteAll());
     }
 }
