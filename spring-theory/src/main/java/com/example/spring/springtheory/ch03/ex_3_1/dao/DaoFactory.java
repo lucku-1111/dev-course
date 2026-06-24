@@ -1,8 +1,9 @@
-package com.example.spring.springtheory.ch02.ex_2_1.dao;
+package com.example.spring.springtheory.ch03.ex_3_1.dao;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+// DaoFactory를 스프링 빈 팩토리가 사용할 수 있는 설정정보로 리팩토링
 @Configuration // 애플리케이션 컨텍스트 또는 빈 팩토리가 사용할 설정 정보라는 표시
 public class DaoFactory {
 

@@ -1,5 +1,6 @@
-package com.example.spring.springtheory.ch02.ex_2_1.domain;
+package com.example.spring.springtheory.ch03.ex_3_2.domain;
 
+// 사용자 정보를 저장할 User클래스
 public class User {
 
     private String id;
