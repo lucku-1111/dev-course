@@ -1,6 +1,6 @@
-package com.example.spring.springtheory.ch02.ex_2_1.dao;
+package com.example.spring.springtheory.ch02.dao;
 
-import com.example.spring.springtheory.ch02.ex_2_1.domain.User;
+import com.example.spring.springtheory.ch02.domain.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -27,8 +27,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 @SpringJUnitConfig(DaoFactory.class)
 class UserDAOTest {
 
-    // @Autowired : 타입(UserDAO)이 일치하는 빈을 스프링이 찾아 이 필드에 주입해준다.
-    @Autowired // 더 이상 직접 new AnnotationConfigApplicationContext / getBean을 호출할 필요가 없다.
+    // @Autowired : 타입(UserDAO)이 일치하는 빈을 스프링이 찾아 이 필드에 주입해x준다.
+    @Autowired // 더 이상 직접 new AnnotationConfigApplicationContext / getBean 을 호출할 필요가 없다.
     private UserDAO userDAO;
 
     // @BeforeEach : 각 @Test 메서드가 실행되기 '직전'마다 매번 호출된다(공통 준비 작업).
@@ -42,9 +42,9 @@ class UserDAOTest {
 
     private User newUser(String id, String name, String password) {
         User user = new User();
-        user.setId("test123");
-        user.setName("test234");
-        user.setPassword("321");
+        user.setId(id);
+        user.setName(name);
+        user.setPassword(password);
 
         return user;
     }
@@ -76,12 +76,14 @@ class UserDAOTest {
 
     @Test
     void add_중복_id_예외() throws SQLException, ClassNotFoundException {
+
         final User user = newUser("dup_id", "사용자1", "3210");
 
+        // 정상동작
         userDAO.add(user);
 
-        /*
         // 익명클래스
+        /*
         Executable action = new Executable() {
             @Override
             public void execute() throws Throwable {
@@ -98,13 +100,13 @@ class UserDAOTest {
 
     @Test
     void get_없는_id_예외() {
-        assertThrows(SQLException.class, () -> userDAO.get("존재하지 않는 id"));
+        assertThrows(SQLException.class, () -> userDAO.get("존재하지_않는_id"));
     }
 
-    @Disabled("일부러 틀린 기댓값을 넣은 학습용 실패 에제 - 실패 메시지를 보고 싶을 때만 활성화")
+    @Disabled("일부러 틀린 기댓값을 넣은 학습용 실패 예제 - 실패 메시지를 보고 싶을 때만 활성화")
     @Test
     void 일부러_실패하는_테스트() throws SQLException, ClassNotFoundException {
-        userDAO.add(newUser("fail_demo", "fail", "1234"));
+        userDAO.add( newUser("fail_demo", "fail", "1234") );
 
         assertEquals(2, userDAO.getCount());
     }
