@@ -31,6 +31,13 @@ package com.example.spring.springtheory.ch05.ex_5_1;
 // - 사용자 레벨의 변경 작업은 일정한 주기를 가지고 일괄적으로 진행된다.
 // 변경 작업 전에는 조건을 충족하더라도 레벨의 변경이 일어나지 않는다.
 
+// * 이 예제의 구성 (책임에 따라 계층을 나눈다)
+//  - domain/User   : 사용자 데이터 + '자신의 레벨을 올리는' 동작(upgradeLevel)
+//  - dao/Level     : 레벨 enum + 레벨 순서 규칙(nextLevel)
+//  - dao/UserDAO   : 데이터 접근(add/update/get/getAll/getCount)
+//  - service/UserService : 업그레이드 '업무 규칙'(언제 올릴지 판단 + 일괄 처리)
+//  - dao/JdbcContext + StatementStrategy + RowMapper : 변하지 않는 JDBC 흐름 / 변하는 부분 분리
+
 public class Start {
     static void main() {
 

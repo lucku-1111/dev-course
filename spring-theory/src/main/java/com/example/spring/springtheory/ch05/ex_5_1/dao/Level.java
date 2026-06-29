@@ -33,7 +33,7 @@ public enum Level {
         switch (this) {
             case BASIC: return SILVER;
             case SILVER: return GOLD;
-            default: return null;
+            default: return GOLD;
         }
     }
 }
