@@ -57,7 +57,7 @@ public class DataService {
 
     static class DuplicateUserIdException extends RuntimeException {
         DuplicateUserIdException(String id, Throwable cause) {
-            super("이미 존재하는 아이디입니다:" + id, cause);
+            super("이미 존재하는 아이디입니다: " + id, cause);
         }
     }
 }
