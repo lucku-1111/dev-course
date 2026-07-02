@@ -35,6 +35,7 @@ import org.springframework.web.bind.annotation.RestController;
 //   - 정리 : 화면(HTML)을 보여 주려면 @Controller,
 //     데이터(JSON/문자열)를 내려 주려면 @RestController 를 쓴다.
 
+// * 필터
 @RestController
 public class FilterController {
 }
