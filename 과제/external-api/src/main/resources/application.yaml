@@ -1,0 +1,8 @@
+weather:
+  api:
+    key: d2194d22b2ae82187bbb1c51e6def21d55210e4a15e2863b323c9d7d56f35a36
+spring:
+  application:
+    name: external-api
+feign-api:
+  url: https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0
