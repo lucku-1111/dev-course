@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: board
+  datasource:
+    url: jdbc:mysql://localhost:3306/java_basic?useSSL=false&serverTimezone=UTC&characterEncoding=UTF-8
+    username: root
+    password: 6731
+  jpa:
+    hibernate:
+      ddl-auto: update
