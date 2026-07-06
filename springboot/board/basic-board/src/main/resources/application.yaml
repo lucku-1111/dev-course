@@ -28,4 +28,4 @@ spring:
     # - 프로그램은 이 연결의 양 끝의 '소켓'이라는 창구로 다룬다.
     url: jdbc:mysql://localhost:3306/java_basic?useSSL=false&serverTimezone=UTC&characterEncoding=UTF-8
     username: root
-    password: 1234
+    password: 6731
