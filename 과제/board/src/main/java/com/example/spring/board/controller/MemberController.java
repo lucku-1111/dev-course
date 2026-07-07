@@ -12,4 +12,7 @@ public class MemberController {
     public String join() {
         return "sign-up";
     }
+
+    @GetMapping("/login")
+    public String login() { return "sign-in"; }
 }

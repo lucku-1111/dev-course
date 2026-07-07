@@ -8,9 +8,9 @@ $(document).ready(() => {
         let userName = $('#user_name').val();
 
         let formData = {
-            userId : userId,
-            password : password,
-            userName : userName
+           userId : userId,
+           password : password,
+           userName : userName
         }
 
 
