@@ -3,6 +3,7 @@ package com.example.spring.basicboard.service;
 import com.example.spring.basicboard.domain.entity.Board;
 import com.example.spring.basicboard.domain.repository.BoardRepository;
 import com.example.spring.basicboard.dto.BoardDeleteRequestDto;
+import com.example.spring.basicboard.dto.BoardUpdateRequestDto;
 import com.example.spring.basicboard.exception.BoardNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
@@ -57,6 +58,21 @@ public class BoardService {
     public Board getBoardDetail(Long id) {
         return boardRepository.findById(id)
                 .orElseThrow(() -> new BoardNotFoundException("[BOARD] 게시글을 찾을 수 없습니다. id: " + id));
+    }
+
+    @Transactional
+    public void updateBoard(Long id, BoardUpdateRequestDto dto) {
+        Board board = boardRepository.findById(id)
+                .orElseThrow(
+                        () -> new BoardNotFoundException("[BOARD] 수정할 게시글을 찾을 수 없습니다. id: " + id)
+                );
+        String filePath = board.getFilePath();
+        if (dto.isFileFlag()) { // 파일 변경이 있었을 경우
+            fileService.deleteFile(filePath); // 기존 파일 삭제
+            filePath = fileService.storeFile(dto.getFile()); // 새 파일 저장
+        }
+
+        board.update(dto.getTitle(), dto.getContent(), filePath);
     }
 
     @Transactional
