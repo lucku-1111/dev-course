@@ -2,12 +2,15 @@ package com.example.spring.basicboard.service;
 
 import com.example.spring.basicboard.domain.entity.Board;
 import com.example.spring.basicboard.domain.repository.BoardRepository;
+import com.example.spring.basicboard.exception.BoardNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -16,6 +19,7 @@ import java.util.List;
 public class BoardService {
 
     private final BoardRepository boardRepository;
+    private final FileService fileService;
 
     public List<Board> getBoardList(int page, int size) {
         PageRequest pageable = PageRequest.of(page - 1, size, Sort.by("id").descending());
@@ -34,4 +38,25 @@ public class BoardService {
     public int getTotalBoards() {
         return (int) boardRepository.count();
     }
+
+    @Transactional
+    public void saveBoard(String userId, String title, String content, MultipartFile file) {
+        String filePath = fileService.storeFile(file);
+
+        Board build = Board.builder()
+                .userId(userId)
+                .title(title)
+                .content(content)
+                .filePath(filePath)
+                .created(LocalDateTime.now())
+                .build();
+        boardRepository.save(build);
+    }
+
+    public Board getBoardDetail(Long id) {
+        return boardRepository.findById(id)
+                .orElseThrow(() -> new BoardNotFoundException("[BOARD] 게시글을 찾을 수 없습니다. id: " + id));
+    }
+
+
 }
