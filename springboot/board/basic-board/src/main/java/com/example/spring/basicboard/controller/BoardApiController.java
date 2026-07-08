@@ -1,6 +1,7 @@
 package com.example.spring.basicboard.controller;
 
 import com.example.spring.basicboard.domain.entity.Board;
+import com.example.spring.basicboard.dto.BoardDeleteRequestDto;
 import com.example.spring.basicboard.dto.BoardDetailResponseDto;
 import com.example.spring.basicboard.dto.BoardListResponseDto;
 import com.example.spring.basicboard.dto.BoardWriteRequestDto;
@@ -70,7 +71,7 @@ public class BoardApiController {
     // 그냥 Resource만 리턴하면 파일 내용은 내려가지만,
     // Content-Disposition: attachment 헤더를 붙일 방법이 없다.
     // -> 그러면 다운로드가 아니라 브라우저가 파일을 그냥 열어버리고, 저장 파일명도 못 정한다.
-    @GetMapping("/file/download/${fileName}")
+    @GetMapping("/file/download/{fileName}")
     public ResponseEntity<Resource> downloadFile(@PathVariable String fileName) {
         Resource resource = fileService.downloadFile(fileName);
 
@@ -95,5 +96,10 @@ public class BoardApiController {
                 .contentType(MediaType.APPLICATION_OCTET_STREAM)
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename*=UTF-8''" + encodeFileName)
                 .body(resource);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteBoard(@PathVariable Long id, @RequestBody BoardDeleteRequestDto dto) {
+        boardService.deleteBoard(id, dto);
     }
 }

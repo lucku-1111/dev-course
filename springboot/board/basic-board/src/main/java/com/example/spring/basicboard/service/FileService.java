@@ -60,4 +60,13 @@ public class FileService {
             throw new RuntimeException(e);
         }
     }
+
+    public void deleteFile(String filePath) {
+        if (filePath == null || filePath.isEmpty()) return;
+
+        File file = new File(filePath);
+        if (!file.exists()) return;
+
+        file.delete();
+    }
 }
