@@ -1,14 +1,17 @@
 package com.example.spring.board.controller;
 
 import com.example.spring.board.domain.entity.Board;
-import com.example.spring.board.dto.BoardListResponseDto;
+import com.example.spring.board.dto.*;
 import com.example.spring.board.service.BoardService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 @RestController
@@ -24,7 +27,7 @@ public class BoardApiController {
             @RequestParam(defaultValue = "10") int size
     ) {
         List<Board> boards = boardService.getBoardList(page, size);
-        int totalBoards = boards.size();
+        int totalBoards = boardService.getTotalBoards();
 
         int totalPages = (int) Math.ceil((double)totalBoards / size);
         boolean last = page >= totalPages;
@@ -34,5 +37,46 @@ public class BoardApiController {
                 .last(last)
                 .totalPages(totalPages)
                 .build();
+    }
+
+    @GetMapping("/{id}")
+    public BoardDetailResponseDto getBoardDetail(@PathVariable Long id) {
+        Board board = boardService.getBoardDetail(id);
+        return BoardDetailResponseDto.builder()
+                .title(board.getTitle())
+                .content(board.getContent())
+                .created(board.getCreated())
+                .userId(board.getUserId())
+                .filePath(board.getFilePath())
+                .build();
+    }
+
+    @GetMapping("/file/download/{fileName}")
+    public ResponseEntity<Resource> downloadFile(@PathVariable String fileName) {
+        Resource resource = boardService.downloadFile(fileName);
+
+        String encoded = URLEncoder.encode(resource.getFilename(), StandardCharsets.UTF_8)
+                .replaceAll("\\+", "%20");
+
+        return ResponseEntity.ok()
+                .contentType(MediaType.APPLICATION_OCTET_STREAM)
+                .header(HttpHeaders.CONTENT_DISPOSITION,
+                        "attachment; filename*=UTF-8''" + encoded)
+                .body(resource);
+    }
+
+    @PostMapping
+    public void saveArticle(@ModelAttribute BoardWriteRequestDto request) {
+        boardService.saveArticle(request.getUserId(), request.getTitle(), request.getContent(), request.getFile());
+    }
+
+    @PutMapping("/{id}")
+    public void updateArticle(@PathVariable Long id, @ModelAttribute BoardUpdateRequestDto request) {
+        boardService.updateAriticle(id, request);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteArticle(@PathVariable Long id, @RequestBody BoardDeleteRequestDto request) {
+        boardService.deleteArticle(id, request);
     }
 }
