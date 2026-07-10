@@ -1,3 +1,5 @@
+server:
+  port: 8081
 spring:
   application:
     name: basic-board
@@ -29,5 +31,21 @@ spring:
     url: jdbc:mysql://localhost:3306/java_basic?useSSL=false&serverTimezone=UTC&characterEncoding=UTF-8
     username: root
     password: 6731
+  servlet:
+    multipart:
+      max-file-size: 10MB # 파일 1개 최대 크기(기본 1MB여서 쉽게 초과됨)
+      max-request-size: 10MB # 요청 전체 최대 크기
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true # 출력되는 SQL을 보기좋게 출력
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+
 file:
   upload-dir: ./uploads

@@ -23,6 +23,12 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
     implementation 'org.springframework.boot:spring-boot-starter-webmvc'
+    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:3.0.3'
+    // # 왜 '-webmvc-ui' 스타터인가?
+    //   - 우리 앱은 전통적 Spring MVC(spring-boot-starter-webmvc)를 쓴다 → webmvc 용을 골라야 한다
+    //     (WebFlux 를 쓴다면 '-webflux-ui' 를 골랐을 것이다)
+    //   - 접미사 '-ui' 는 명세(JSON)뿐 아니라 Swagger UI 화면까지 함께 포함한다는 뜻이다
+    //     (화면 없이 JSON 명세만 필요하면 '-webmvc-api' 를 쓴다)
     compileOnly 'org.projectlombok:lombok'
     runtimeOnly 'com.h2database:h2'
     runtimeOnly 'com.mysql:mysql-connector-j'
