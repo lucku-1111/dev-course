@@ -29,6 +29,10 @@ import java.util.List;
 // - @ApiResponse(s)    : 이 API가 낼 수 있는 응답(상태코드별)을 문서에 명시
 // - @Content / @Schema : 응답/요청 본문의 "형태(어떤 DTO인지)"를 지정
 
+// * 뷰 컨트롤러(@Controller + 뷰 이름 반환)는 이 설정과 무관하게 원래 문서에 안 나온다.
+// - springdoc 은 @ResponseBody(= @RestController) 핸들러만 문서화 대상으로 삼기 때문이다.
+// -(BoardController/MemberController 는 "board-list" 같은 뷰 이름을 반환하므로 애초에 제외된다)
+
 @Tag(name = "게시글 API", description = "게시글 목록/상세 조회, 작성, 수정, 삭제, 첨부파일 다운로드")
 @RestController
 @RequiredArgsConstructor
