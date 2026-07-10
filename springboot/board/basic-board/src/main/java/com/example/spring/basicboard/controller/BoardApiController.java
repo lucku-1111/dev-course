@@ -154,13 +154,25 @@ public class BoardApiController {
                 .body(resource);
     }
 
-    @PutMapping("/{id}")
-    public void updateBoard(@PathVariable Long id, @RequestBody BoardUpdateRequestDto dto) {
+    @Operation(summary = "게시글 수정",
+            description = "경로의 id 게시글을 수정한다. 파일 교체가 가능하도록 multipart/form-data 로 받는다.")
+    @PutMapping(value = "/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public void updateBoard(
+            @Parameter(description = "수정할 게시글 id", example = "1")
+            @PathVariable Long id,
+            @RequestBody BoardUpdateRequestDto dto
+    ) {
         boardService.updateBoard(id, dto);
     }
 
+    @Operation(summary = "게시글 삭제",
+            description = "경로의 id 게시글을 삭제한다. 첨부파일 경로(filePath)를 JSON 본문으로 함께 받아 파일도 정리한다.")
     @DeleteMapping("/{id}")
-    public void deleteBoard(@PathVariable Long id, @RequestBody BoardDeleteRequestDto dto) {
+    public void deleteBoard(
+            @Parameter(description = "삭제할 게시글 id", example = "1")
+            @PathVariable Long id,
+            @RequestBody BoardDeleteRequestDto dto
+    ) {
         boardService.deleteBoard(id, dto);
     }
 }
