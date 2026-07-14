@@ -219,6 +219,8 @@ public class BoardApiController {
     public BoardWithCommentsResponseDto getBoardWithComments(
             @Parameter(description = "조회할 게시글 id", example = "1")
             @PathVariable long id
-    ) {}
+    ) {
+        return null;
+    }
 
 }
