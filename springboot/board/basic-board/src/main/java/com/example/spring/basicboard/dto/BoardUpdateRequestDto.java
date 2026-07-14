@@ -17,5 +17,6 @@ public class BoardUpdateRequestDto {
     @Schema(type = "string", format = "binary", description = "새로 올릴 파일 (교체할 때만). fileFlag=true 이면서 비어 있으면 기존 파일 제거로 처리")
     private MultipartFile file; // 새로 올린 파일(교체할 때만 값이 있음)
     @Schema(description = "첨부파일을 건드렸는지 여부(true=교체 또는 제거, false=기존 유지)", example = "false")
-    private boolean fileFlag; // 첨부파일 변경 여부
+    private boolean fileFlag; // 첨부파일을 변경했는지 여부
+
 }
