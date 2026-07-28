@@ -20,13 +20,13 @@ public class UserService {
     @Transactional
     public void signUp(SignUpRequestDto signUpRequestDto) {
 
-        if (userRepository.existsByUserId(signUpRequestDto.getUserId())) {
+        if ( userRepository.existsByUserId( signUpRequestDto.getUserId() ) ) {
             throw new DuplicateUserIdException("[회원가입] 이미 사용 중인 아이디입니다.");
         }
 
         User user = signUpRequestDto.toUser(passwordEncoder.encode(signUpRequestDto.getPassword()));
 
-        userRepository.save(user);
+        userRepository.save( user );
     }
 
 }

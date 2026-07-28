@@ -30,4 +30,5 @@ public class User {
     @Enumerated(EnumType.STRING)
     @Builder.Default
     private Role role = Role.ROLE_USER;
+
 }
