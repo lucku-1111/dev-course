@@ -31,11 +31,15 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
 
         response.setStatus(HttpServletResponse.SC_OK);
         response.setContentType("application/json; charset=UTF-8");
-        response.getWriter().write(objectMapper.writeValueAsString(
-                SignInResponseDto.builder()
-                        .isLoggedIn(true).message("로그인 성공")
-                        .url("/").userId(user.getUserId()).userName(user.getName())
-                        .build()
-                ));
+
+        SignInResponseDto dto = SignInResponseDto.builder()
+                .isLoggedIn(true)
+                .message("로그인 성공")
+                .url("/")
+                .userId(user.getUserId())
+                .userName(user.getName())
+                .build();
+
+        response.getWriter().write(objectMapper.writeValueAsString(dto));
     }
 }
