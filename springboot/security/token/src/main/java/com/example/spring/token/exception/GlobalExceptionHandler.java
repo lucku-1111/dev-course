@@ -1,6 +1,6 @@
 package com.example.spring.token.exception;
 
-import com.example.spring.formlogin.dto.ErrorResponseDto;
+import com.example.spring.token.dto.ErrorResponseDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
