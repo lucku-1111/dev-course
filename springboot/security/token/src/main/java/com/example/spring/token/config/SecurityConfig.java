@@ -1,7 +1,12 @@
 package com.example.spring.token.config;
 
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.web.SecurityFilterChain;
 
 // * JWT(JSON Web Token)
 // JWT는 당사자 간의 정보를 JSON 객체로 안전하게 전달하기 위한 토큰 표준.
@@ -51,4 +56,42 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
+
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        http
+                // [CSRF vs XSS — 토큰 방식에서 위협이 어떻게 바뀌는가]
+                //
+                // CSRF(Cross-Site Request Forgery):
+                //   "브라우저가 쿠키(세션)를 자동으로 실어 보내는" 성질을 악용해,
+                //   로그인된 사용자의 브라우저로 의도하지 않은 요청을 보내게 하는 공격.
+                //   → 우리는 인증을 Authorization 헤더(자동 전송 안 됨)로 하므로 성립하지 않아 끈다
+                //
+                // XSS(Cross-Site Scripting):
+                //   공격자가 페이지에 악성 스크립트를 주입해 "사용자의 브라우저에서" 실행시키는 공격.
+                //   (예: 게시글에 <script> 태그를 심었는데 이스케이프 없이 그대로 렌더링되는 경우)
+                //   토큰 방식에서는 이게 더 큰 위협이 된다:
+                //   - localStorage는 같은 페이지의 JS라면 누구나 읽을 수 있다
+                //     → 주입된 스크립트가 localStorage.getItem('accessToken')으로 토큰을 훔칠 수 있다
+                //   - 그래서 이 프로젝트의 방어 설계:
+                //     ① access token은 수명을 짧게(2h) → 탈취돼도 피해 시간 제한
+                //     ② refresh token(7d)은 HttpOnly 쿠키에 → JS 접근 자체가 불가능해 XSS로 못 훔친다
+                //   - 근본 방어는 설정이 아니라 코딩 습관: 사용자 입력을 이스케이프 없이 렌더링하지 않기
+                //     (Thymeleaf의 th:text는 자동 이스케이프, th:utext는 위험) + CSP 헤더 적용 등
+                .csrf(AbstractHttpConfigurer::disable)
+                .logout(AbstractHttpConfigurer::disable)
+                .formLogin(AbstractHttpConfigurer::disable)
+                .httpBasic(AbstractHttpConfigurer::disable)
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers(
+                                "/css/**",
+                                "/js/**"
+                        )
+                        .permitAll()
+                        .anyRequest().authenticated()
+                );
+
+        return http.build();
+    }
 }
