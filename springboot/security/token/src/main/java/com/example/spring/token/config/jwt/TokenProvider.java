@@ -1,12 +1,18 @@
 package com.example.spring.token.config.jwt;
 
+import com.example.spring.token.config.security.CustomUserDetails;
+import com.example.spring.token.domain.entity.Role;
 import com.example.spring.token.domain.entity.User;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.JwtParser;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import javax.crypto.SecretKey;
@@ -65,5 +71,44 @@ public class TokenProvider {
                 .claim(CLAIM_ROLE, user.getRole())
                 .signWith(secretKey, Jwts.SIG.HS512)
                 .compact();
+    }
+
+    public TokenStatus validateToken(String token) {
+        try {
+            jwtParser.parseSignedClaims(token);
+            log.debug("Token is valid");
+            return TokenStatus.VALID;
+        } catch (ExpiredJwtException e) {
+            log.warn("Token is expired");
+            return TokenStatus.EXPIRED;
+        } catch (Exception e) {
+            log.warn("Token is invalid");
+            return TokenStatus.INVALID;
+        }
+    }
+
+    public User getTokenDetails(String token) {
+        Claims claims = getClaims(token);
+        return User.builder()
+                .id(claims.get(CLAIM_ID, Long.class))
+                .userId(claims.getSubject())
+                .name(claims.get(CLAIM_NAME, String.class))
+                .role(Role.valueOf(claims.get(CLAIM_ROLE, String.class)))
+                .build();
+    }
+
+    private Claims getClaims(String token) {
+        return jwtParser
+                .parseClaimsJws(token)
+                .getPayload();
+    }
+
+    public Authentication getAuthentication(User user, String token) {
+
+        CustomUserDetails principal = CustomUserDetails.builder()
+                .user(user)
+                .build();
+
+        return new UsernamePasswordAuthenticationToken(principal, token, principal.getAuthorities());
     }
 }
