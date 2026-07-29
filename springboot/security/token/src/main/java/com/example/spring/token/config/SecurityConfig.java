@@ -38,6 +38,16 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 // - Payload를 조작하면 서명이 일치하지 않아 검증 단계에서 탐지된다.
 // - 즉 JWT는 '내용을 숨기는' 것이 아니라 '변조를 막는' 기술이다.
 
+// * Spring Security에서의 동작 흐름
+// 1) 로그인 성공 -> 서버가 jwt 토큰 생성 -> 클라이언트에게 전달
+// 2) 이후 요청 -> 클라이언트가 Authorization: Bearer <토큰> 헤더에 담아 전송
+// 3) JWT 필터 -> 토큰의 서명과 만료 시간을 검증
+// 4) 검증 효과 -> SecurityContextHolder에 인증 정보 저장 -> 컨트롤러까지 요청 도달
+
+// * 세션 방식과의 차이
+// - 세션: 상태를 서버에 저장, 서버 확장 시 세션 공유 필요
+// - JWT: 상태를 토큰(클라이언트)에 저장, 무상태라 확장에 유리
+
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
