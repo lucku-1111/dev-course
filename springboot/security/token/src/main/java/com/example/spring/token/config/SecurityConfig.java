@@ -121,7 +121,14 @@ public class SecurityConfig {
                 // JWT필터를 UsernamePasswordAuthenticationFilter(폼로그인 필터) 자리 앞에 끼워 넣겠다.
                 // 인가 판단은 체인 맨 끝에서 일어나므로,
                 // 그 전에 토큰을 검증해 SecurityContext를 채워둬야 "인증된 요청"으로 취급된다.
-                .addFilterBefore(tokenAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(tokenAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+                // 인가 실패의 두 갈래:
+                // - 401(미인증): 누군지 모름 -> authenticationEntryPoint
+                // - 403(권한 부족): 누군지는 알지만 자격 없음 -> accessDeniedHandler
+                .exceptionHandling(exception -> exception
+                        .accessDeniedHandler(accessDeniedHandler())
+                        .authenticationEntryPoint(authenticationEntryPoint())
+                );
 
         return http.build();
     }
