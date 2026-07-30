@@ -2,7 +2,11 @@ package com.example.spring.token.service;
 
 import com.example.spring.token.config.jwt.JwtProperties;
 import com.example.spring.token.config.jwt.TokenProvider;
+import com.example.spring.token.config.jwt.TokenStatus;
 import com.example.spring.token.domain.entity.User;
+import com.example.spring.token.dto.RefreshTokenResponseDto;
+import com.example.spring.token.util.CookieUtil;
+import jakarta.servlet.http.Cookie;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -20,5 +24,36 @@ public class TokenService {
         String refreshToken = tokenProvider.generateToken(user, jwtProperties.getRefreshTokenValidity());
 
         return new TokenPair(accessToken, refreshToken);
+    }
+
+    public RefreshTokenResponseDto refreshToken(Cookie[] cookies) {
+        String refreshToken = getRefreshToken(cookies);
+
+        if (refreshToken != null && tokenProvider.validateToken(refreshToken) == TokenStatus.VALID) {
+            User user = tokenProvider.getTokenDetails(refreshToken);
+
+            TokenPair tokenPair = issueToken(user);
+
+            return RefreshTokenResponseDto.builder()
+                    .validated(true)
+                    .accessToken(tokenPair.accessToken)
+                    .refreshToken(tokenPair.refreshToken)
+                    .build();
+        }
+
+        return RefreshTokenResponseDto.builder()
+                .validated(false)
+                .build();
+    }
+
+    private String getRefreshToken(Cookie[] cookies) {
+        if (cookies == null) return null;
+
+        for (Cookie cookie : cookies) {
+            if (cookie.getName().equals(CookieUtil.REFRESH_TOKEN_COOKIE)) {
+                return cookie.getValue();
+            }
+        }
+        return null;
     }
 }
