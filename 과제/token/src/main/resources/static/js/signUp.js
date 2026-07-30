@@ -6,11 +6,13 @@ $(document).ready(() => {
         let userId = $('#user_id').val();
         let password = $('#password').val();
         let userName = $('#user_name').val();
+        let role = $('#role').val();
 
         let formData = {
            userId : userId,
            password : password,
-           userName : userName
+           userName : userName,
+           role : role
         }
 
 
