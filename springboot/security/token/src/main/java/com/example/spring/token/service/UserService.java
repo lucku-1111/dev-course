@@ -25,6 +25,7 @@ public class UserService {
     private final AuthenticationManager authenticationManager;
     private final TokenService tokenService;
 
+    @Transactional
     public void signUp(SignUpRequestDto request) {
         if (userRepository.existsByUserId(request.getUserId())) {
             throw new DuplicateUserIdException("[회원가입] 이미 사용중인 아이디입니다.");
