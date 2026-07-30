@@ -9,13 +9,9 @@ import lombok.Setter;
 @Setter
 @Builder
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class SignInResponseDto {
+public class RefreshTokenResponseDto {
 
-    private boolean isLoggedIn;
-    private String url;
-    private String userName;
-    private String userId;
+    private boolean validated;
     private String accessToken;
     private String refreshToken;
-    private String message;
 }
