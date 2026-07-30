@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: token
+  datasource:
+    url: jdbc:mysql://localhost:3306/java_basic?useSSL=false&serverTimezone=UTC&characterEncoding=UTF-8
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: 6731
+
+jwt:
+  issuer: test@naver.com
+  secret_key: BFnWA0slKJZHrJoKO8UDfE9irRdhCuvGuxHhiWq5DDk8MPUoJOxtXHCumF17XUFRX+IQXeQ4SrpRGzHPzUVd9Q==
+  access-token-validity: 2h
+  refresh-token-validity: 7d
