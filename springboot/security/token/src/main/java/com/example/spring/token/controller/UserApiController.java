@@ -6,6 +6,7 @@ import com.example.spring.token.domain.entity.User;
 import com.example.spring.token.dto.*;
 import com.example.spring.token.service.UserService;
 import com.example.spring.token.util.CookieUtil;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -45,6 +46,18 @@ public class UserApiController {
         signInResponseDto.setRefreshToken(null);
 
         return signInResponseDto;
+    }
+
+    @PostMapping("/logout")
+    public LogoutResponseDto logout(
+            HttpServletRequest request,
+            HttpServletResponse response
+    ) {
+        CookieUtil.deleteCookie(request, response, CookieUtil.REFRESH_TOKEN_COOKIE);
+        return LogoutResponseDto.builder()
+                .message("로그아웃 되었습니다.")
+                .url("/users/login")
+                .build();
     }
 
     @GetMapping("/info")
