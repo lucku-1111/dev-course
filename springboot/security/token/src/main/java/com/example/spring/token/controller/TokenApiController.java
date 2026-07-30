@@ -1,10 +1,15 @@
 package com.example.spring.token.controller;
 
 import com.example.spring.token.config.jwt.JwtProperties;
+import com.example.spring.token.dto.ErrorResponseDto;
+import com.example.spring.token.dto.RefreshTokenResponseDto;
 import com.example.spring.token.service.TokenService;
+import com.example.spring.token.util.CookieUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,10 +23,27 @@ public class TokenApiController {
     private final JwtProperties jwtProperties;
 
     @PostMapping("/refresh")
-    public void refreshToken(
+    public ResponseEntity<?> refreshToken(
             HttpServletRequest request,
             HttpServletResponse response
     ) {
+        RefreshTokenResponseDto refreshTokenResponseDto = tokenService.refreshToken(request.getCookies());
 
+        if (refreshTokenResponseDto.isValidated()) {
+            CookieUtil.addCookie(
+                    response,
+                    CookieUtil.REFRESH_TOKEN_COOKIE,
+                    refreshTokenResponseDto.getRefreshToken(),
+                    (int) jwtProperties.getRefreshTokenValidity().toSeconds()
+            );
+
+            refreshTokenResponseDto.setRefreshToken(null);
+
+            return ResponseEntity.ok(refreshTokenResponseDto);
+        }
+
+        return ResponseEntity
+                .status(HttpStatus.UNAUTHORIZED)
+                .body(new ErrorResponseDto(HttpStatus.UNAUTHORIZED.value(), "리프레시 토큰이 만료되었습니다."));
     }
 }
