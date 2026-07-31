@@ -53,7 +53,8 @@ public class SecurityConfig {
                                 "/api/members/login",
                                 "/api/tokens/refresh",
                                 "/css/**",
-                                "/js/**"
+                                "/js/**",
+                                "/access-denied"
                         ).permitAll()
                         .anyRequest().authenticated())
                 .addFilterBefore(tokenAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
