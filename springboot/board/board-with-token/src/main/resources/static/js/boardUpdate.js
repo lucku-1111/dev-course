@@ -1,8 +1,7 @@
 let selectedFile = null; // 파일은 1개만 선택 가능
 
 $(document).ready(() => {
-    checkSession();
-    loadBoardDetail();
+    loadCurrentUser(() => loadBoardDetail());
     updated();
     fileChanged();
     $('#hiddenFileFlag').val(false);
@@ -67,13 +66,6 @@ let updateFileList = () => {
             updateFileList(); // 파일 목록 갱신
         });
     }
-}
-
-let checkSession = () => {
-    let hUserId = $('#hiddenUserId').val();
-
-    if (hUserId == null || hUserId === '')
-        window.location.href = "/members/login";
 }
 
 let loadBoardDetail = () => {

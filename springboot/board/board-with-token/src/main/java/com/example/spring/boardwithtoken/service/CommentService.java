@@ -21,13 +21,13 @@ public class CommentService {
     private final CommentRepository commentRepository;
 
     @Transactional
-    public void addComment(Long boardId, CommentWriteRequestDto dto) {
+    public void addComment(Long boardId, CommentWriteRequestDto dto, String requestUserId) {
         Board board = boardRepository.findById(boardId)
                 .orElseThrow(() -> new BoardNotFoundException("게시글을 찾을 수 없습니다. id: " + boardId));
 
         Comment comment = Comment.builder()
                 .content(dto.getContent())
-                .userId(dto.getUserId())
+                .userId(requestUserId)
                 .board(board)
                 .created(LocalDateTime.now())
                 .build();

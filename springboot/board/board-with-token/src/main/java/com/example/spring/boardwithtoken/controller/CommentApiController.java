@@ -1,10 +1,12 @@
 package com.example.spring.boardwithtoken.controller;
 
+import com.example.spring.boardwithtoken.config.security.CustomUserDetails;
 import com.example.spring.boardwithtoken.dto.CommentWriteRequestDto;
 import com.example.spring.boardwithtoken.service.CommentService;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 @Tag(name = "댓글 API", description = "게시글에 댓글 달기")
@@ -19,8 +21,9 @@ public class CommentApiController {
     public void addComment(
             @Parameter(description = "댓글을 달 게시글 id", example = "1")
             @PathVariable long boardId,
-            @RequestBody CommentWriteRequestDto dto
+            @RequestBody CommentWriteRequestDto dto,
+            @AuthenticationPrincipal CustomUserDetails principal
     ) {
-        commentService.addComment(boardId, dto);
+        commentService.addComment(boardId, dto, principal.getUsername());
     }
 }

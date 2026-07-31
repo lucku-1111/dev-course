@@ -12,6 +12,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -66,11 +67,15 @@ public class BoardService {
     }
 
     @Transactional
-    public void updateBoard(long id, BoardUpdateRequestDto dto) {
+    public void updateBoard(long id, BoardUpdateRequestDto dto, String requestUserId) {
         Board board = boardRepository.findById(id)
                 .orElseThrow(
                         () -> new BoardNotFoundException("[BOARD] 수정할 게시글을 찾을 수 없습니다. id : " + id)
                 );
+
+        if (!board.getUserId().equals(requestUserId)) {
+            throw new AccessDeniedException("[BOARD] 본인이 작성한 게시글만 수정할 수 있습니다. id : " + id);
+        }
 
         String filePath = board.getFilePath();
         if ( dto.isFileFlag() ) { // 파일 변경이 있었을 경우

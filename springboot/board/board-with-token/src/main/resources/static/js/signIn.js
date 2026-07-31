@@ -19,18 +19,20 @@ $(document).ready(() => {
             contentType: 'application/json; charset=utf-8', // 전송 데이터의 타입
             dataType: 'json', // 서버에서 받을 데이터의 타입
             success: (response) => {
-                console.log('res :: ', response)
-                if (response.successed) {
-                    // 성공 후 다른 페이지로 이동하거나 처리할 코드 작성 가능
+                if (response.loggedIn) {
+                    setAccessToken(response.accessToken);
                     window.location.href = response.url;
+                    return;
                 }
                 alert(response.message);
             },
             error: (error) => {
                 // 실패 시 실행될 콜백 함수
                 console.error('오류 발생:', error);
-                alert(error.responseJSON.message);
-                window.location.href = error.responseJSON.url;
+                const message = error.responseJSON && error.responseJSON.message
+                    ? error.responseJSON.message
+                    : '로그인 중 오류가 발생했습니다.';
+                alert(message);
             }
         });
 

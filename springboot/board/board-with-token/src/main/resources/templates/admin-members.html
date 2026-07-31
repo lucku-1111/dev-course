@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.7.1.js" crossorigin="anonymous"></script>
+    <script th:src="@{/js/common.js}"></script>
+    <script th:src="@{/js/adminMembers.js}"></script>
+    <link th:href="@{/css/board.css}" rel="stylesheet">
+    <title>회원 관리</title>
+</head>
+<body>
+
+<div class="container">
+    <h1>회원 관리</h1>
+    <a th:href="@{/}" class="btn">목록으로 돌아가기</a>
+
+    <div id="board">
+        <table>
+            <thead>
+            <tr>
+                <th>id</th>
+                <th>아이디</th>
+                <th>이름</th>
+                <th>권한</th>
+            </tr>
+            </thead>
+            <tbody id="memberContent">
+            <!-- Ajax를 통해 회원 데이터가 여기에 동적으로 추가됨 -->
+            </tbody>
+        </table>
+    </div>
+</div>
+
+</body>
+</html>

@@ -1,5 +1,6 @@
 package com.example.spring.boardwithtoken.controller;
 
+import com.example.spring.boardwithtoken.config.security.CustomUserDetails;
 import com.example.spring.boardwithtoken.domain.entity.Board;
 import com.example.spring.boardwithtoken.dto.*;
 import com.example.spring.boardwithtoken.exception.BoardNotFoundException;
@@ -21,6 +22,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URLEncoder;
@@ -90,8 +92,11 @@ public class BoardApiController {
     @Operation(summary = "게시글 작성",
             description = "제목/내용/작성자와 (선택적) 첨부파일을 multipart/form-data 로 받아 새 게시글을 저장한다.")
     @PostMapping( consumes = MediaType.MULTIPART_FORM_DATA_VALUE )
-    public void saveBoard(@ModelAttribute BoardWriteRequestDto dto) {
-        boardService.saveBoard(dto.getUserId(), dto.getTitle(), dto.getContent(), dto.getFile());
+    public void saveBoard(
+            @ModelAttribute BoardWriteRequestDto dto,
+            @AuthenticationPrincipal CustomUserDetails principal
+    ) {
+        boardService.saveBoard(principal.getUsername(), dto.getTitle(), dto.getContent(), dto.getFile());
     }
 
     // @ApiResponses = "이 API 가 낼 수 있는 응답들" 을 상태코드별로 문서에 나열한다
@@ -172,8 +177,9 @@ public class BoardApiController {
     public void updateBoard(
             @Parameter(description = "수정할 게시글 id", example = "1")
             @PathVariable long id,
-            @RequestBody BoardUpdateRequestDto dto) {
-        boardService.updateBoard(id, dto);
+            @RequestBody BoardUpdateRequestDto dto,
+            @AuthenticationPrincipal CustomUserDetails principal) {
+        boardService.updateBoard(id, dto, principal.getUsername());
     }
 
     @Operation(summary = "게시글 삭제",

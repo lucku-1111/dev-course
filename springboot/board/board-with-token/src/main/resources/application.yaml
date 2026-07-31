@@ -23,3 +23,9 @@ springdoc:
 
 file:
   upload-dir: ./uploads
+
+jwt:
+  issuer: test@naver.com
+  secret_key: VAw2dib9XNYAHxbrMtZy6l/ktzI0vMZG+HwCae0UvGiaXPV3+Yih6Pa5eNilY+a/DxzNUkasNrQktHHPQx+kDA==
+  access-token-validity: 2h
+  refresh-token-validity: 7d

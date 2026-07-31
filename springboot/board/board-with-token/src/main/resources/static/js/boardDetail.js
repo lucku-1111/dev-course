@@ -1,7 +1,10 @@
 
 $(document).ready(() => {
-    checkSession();
-    loadBoardDetail();
+    loadCurrentUser((info) => {
+        $('#hiddenUserId').val(info.userId);
+        $('#hiddenUserName').val(info.userName);
+        loadBoardDetail();
+    });
 });
 
 let editArticle = () => {
@@ -28,13 +31,6 @@ let deleteArticle = () => {
             console.error('Error:', error);
         }
     });
-}
-
-let checkSession = () => {
-    let hUserId = $('#hiddenUserId').val();
-
-    if (hUserId == null || hUserId === '')
-        window.location.href = "/members/login";
 }
 
 let loadBoardDetail = () => {
@@ -122,11 +118,10 @@ let renderComments = (comments) => {
 }
 
 // 댓글 등록 - POST /api/boards/{boardId}/comments
-//   - 작성자(userId)는 입력받지 않고 로그인 세션 값(hiddenUserId)을 쓴다
+//   - 작성자(userId)는 입력받지 않는다. 서버가 토큰(@AuthenticationPrincipal)에서 꺼낸 값을 그대로 쓴다.
 //   - 성공하면 입력칸을 비우고 상세를 다시 불러 댓글 목록(과 목록 화면의 댓글 수 집계 대상)을 갱신한다
 let submitComment = () => {
     let hId = $('#hiddenId').val();
-    let hUserId = $('#hiddenUserId').val();
     let content = $('#commentContent').val();
 
     // 빈 댓글 방지 - trim 으로 공백만 친 경우도 걸러낸다
@@ -138,8 +133,8 @@ let submitComment = () => {
     $.ajax({
         type: 'POST',
         url: '/api/boards/' + hId + '/comments',
-        contentType: 'application/json',                              // JSON 본문 (@RequestBody 로 받는다)
-        data: JSON.stringify({ userId: hUserId, content: content }),  // CommentWriteRequestDto 필드와 키가 같아야 한다
+        contentType: 'application/json',           // JSON 본문 (@RequestBody 로 받는다)
+        data: JSON.stringify({ content: content }), // CommentWriteRequestDto 필드와 키가 같아야 한다
         success: () => {
             $('#commentContent').val('');   // 입력칸 비우기
             loadBoardDetail();              // 방금 단 댓글이 보이도록 다시 조회

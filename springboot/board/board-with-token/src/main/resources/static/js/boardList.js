@@ -1,7 +1,18 @@
 
 $(document).ready(() => {
-    checkSession();
+    loadCurrentUser((info) => {
+        $('#welcomeMsg').text(info.userName + '님 환영합니다.');
+        $('#hiddenUserId').val(info.userId);
+        if (info.role === 'ROLE_ADMIN') {
+            $('#adminLink').show();
+        }
+    });
     loadBoard(1); // 처음엔 1페이지를 보여준다
+
+    $('#logoutBtn').on('click', (e) => {
+        e.preventDefault();
+        logout();
+    });
 
     // [추가 - QueryDSL] 검색 버튼 - 입력한 조건으로 1페이지부터 다시 조회한다
     //   (검색 조건이 바뀌면 결과 전체가 달라지므로, 보던 페이지가 아니라 1페이지부터 보여주는 게 자연스럽다)
@@ -23,14 +34,6 @@ $(document).ready(() => {
 });
 
 const PAGE_SIZE = 10; // 한 페이지에 보여줄 게시글 수
-
-// 로그인(세션) 확인 - 로그인 정보가 없으면 로그인 페이지로 보낸다
-let checkSession = () => {
-    let hUserId = $('#hiddenUserId').val();
-
-    if (hUserId == null || hUserId === '')
-        window.location.href = "/members/login";
-}
 
 // 검색 폼의 입력값을 모아 "값이 있는 것만" 객체로 만든다
 //   - 빈 문자열을 그대로 보내면 서버에서 빈 값 처리로 헷갈릴 수 있으니, 애초에 값이 있는 키만 담는다
