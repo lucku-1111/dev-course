@@ -30,5 +30,35 @@ package com.example.spring.oauth2.config;
 // 4) 반환된 OAuth2User로 Athentication을 만들어 SecurityContext에 저장 -> 로그인완료
 // 5) 마지막으로 SuccessHandler 호출 -> 로그인 후처리(JWT 발급)도 개발자의 몫
 
+// * kakao developers 절차 - https://developers.kakao.com/
+// 1.kakao developers 접속 -> 로그인
+// 2.앱 -> 앱생성(icon까지 등록), 도메인등록(x)
+// 3. 앱 > 앱 설정 > 앱 > 일반 -> 개인 개발자 or 사업자 정보등록(개인 사업자 번호 필수)
+// 비즈 앱 전환(가입시 이메일을 받아오기 위해 필수) -> 카카오 비즈니스 인증 진행
+//
+//=== 카카오 비즈니스 가입 완료 문구 ===
+//카카오비즈니스 회원이 되신 것을 환영합니다.
+//이제 다양한 자산과 도구를 이용하실 수 있습니다.
+//
+//가입 정보는 카카오비즈니스 > 내 정보에서 확인하거나 수정하실 수 있습니다.
+//
+//감사합니다.
+//====================================
+//
+// 4. 앱 > 앱 설정 > 앱 > 플랫폼 키 > REST API 키
+//client-id : xxxxxxxxx
+//client-secret : xxxxxxxxx
+//
+// 5. 앱 > 앱 설정 > 앱 > 플랫폼 키 > REST API 키
+// 카카오 로그인 리다이렉트 URI 등록 후 꼭 저장 누르기
+// http://localhost:8080/login/oauth2/code/kakao
+//
+// 6. 카카오 로그인 활성화
+// 앱 > 제품 설정 > 카카오 로그인 > 일반 > 활성화 시키기
+//
+// 7. 동의항목
+// 앱 > 제품 설정 > 카카오 로그인
+// 닉네임, 이메일 설정 변경(상태 : 필수동의)
+
 public class SecurityConfig {
 }
