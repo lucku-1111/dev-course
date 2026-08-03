@@ -25,8 +25,12 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
     implementation 'org.springframework.boot:spring-boot-starter-webmvc'
     implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
-    compileOnly 'org.projectlombok:lombok'
+    implementation 'io.jsonwebtoken:jjwt-api:0.13.0'  // JWT API
+
+    runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.13.0'    // JWT 구현체
+    runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.13.0' // JSON 처리를 위한 Jackson 모듈
     runtimeOnly 'com.mysql:mysql-connector-j'
+    compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-data-jpa-test'
     testImplementation 'org.springframework.boot:spring-boot-starter-security-oauth2-client-test'
