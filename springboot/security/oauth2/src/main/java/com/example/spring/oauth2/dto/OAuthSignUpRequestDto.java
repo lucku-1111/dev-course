@@ -1,16 +1,10 @@
 package com.example.spring.oauth2.dto;
 
 import com.example.spring.oauth2.domain.entity.Role;
-import lombok.Builder;
 import lombok.Getter;
 
 @Getter
-@Builder
-public class UserInfoResponseDto {
-
-    private long id;
-    private String userId;
-    private String userName;
+public class OAuthSignUpRequestDto {
+    private String signupToken;
     private Role role;
-
 }

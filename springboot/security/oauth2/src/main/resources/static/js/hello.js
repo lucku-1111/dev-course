@@ -18,7 +18,7 @@ let callAuthorityApi = (url) => {
         },
         error: (xhr) => {
             let response = xhr.responseJSON;
-            let message = response && response.message ? response.message : '요청에 실패했습니다.';
+            let message = response && response.message ? response.message: '요청에 실패했습니다.';
             $('#authority-result').text(message).css('color', 'red');
         }
     });

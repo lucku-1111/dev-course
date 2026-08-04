@@ -31,13 +31,13 @@ public class CustomUserDetails implements UserDetails {
     private User user;
 
     // 이 사용자가 가진 권한 목록. AuthorizationFilter가 인가 판단할 때 사용한다.
-    // "ROLE_" : hasRole("ADMIN") 검사는 내부적으로 "ROLE_ADMIN" 권한을 찾는다.
+    // "ROLE_": hasRole("ADMIN") 검사는 내부적으로 "ROLE_ADMIN" 권한을 찾는다.
     // 빈 리스트를 반환하면 로그인은 되지만 권한이 없는 사용자가 되어버린다.
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(
-                new SimpleGrantedAuthority( user.getRole().name() )
-        );
+                new SimpleGrantedAuthority(user.getRole().name())
+       );
     }
 
     // DaoAuthenticationProvider가 passwordEncoder.matches(사용자입력, 이 값)으로 대조한다.
@@ -59,19 +59,19 @@ public class CustomUserDetails implements UserDetails {
     // 나중에 "로그인 5회 실패 시 잠금"같은 정책을 넣는다면 User 엔티티에 상태 컬럼을 추가하고
     // 여기서 그 값을 반환하도록 바꾸면 된다.
 
-    // 계정 자체가 만료되지 않았는가 (휴먼 계정 정책 등)
+    // 계정 자체가 만료되지 않았는가(휴먼 계정 정책 등)
     @Override
     public boolean isAccountNonExpired() {
         return true;
     }
 
-    // 계정이 잠기지 않았는가 (로그인 연속 실패 잠금 등)
+    // 계정이 잠기지 않았는가(로그인 연속 실패 잠금 등)
     @Override
     public boolean isAccountNonLocked() {
         return true;
     }
 
-    // 비밀번호가 만료되지 않았는가 (주기적 변경 강제 정책 등)
+    // 비밀번호가 만료되지 않았는가(주기적 변경 강제 정책 등)
     @Override
     public boolean isCredentialsNonExpired() {
         return true;

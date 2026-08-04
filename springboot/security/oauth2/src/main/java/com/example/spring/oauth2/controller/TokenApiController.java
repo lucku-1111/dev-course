@@ -26,16 +26,18 @@ public class TokenApiController {
     public ResponseEntity<?> refreshToken(
             HttpServletRequest request,
             HttpServletResponse response
-    ) {
+   ) {
+
         RefreshTokenResponseDto refreshTokenResponseDto = tokenService.refreshToken(request.getCookies());
 
         if (refreshTokenResponseDto.isValidated()) {
+
             CookieUtil.addCookie(
                     response,
                     CookieUtil.REFRESH_TOKEN_COOKIE,
                     refreshTokenResponseDto.getRefreshToken(),
                     (int) jwtProperties.getRefreshTokenValidity().toSeconds()
-            );
+           );
 
             refreshTokenResponseDto.setRefreshToken(null);
 
@@ -46,4 +48,5 @@ public class TokenApiController {
                 .status(HttpStatus.UNAUTHORIZED)
                 .body(new ErrorResponseDto(HttpStatus.UNAUTHORIZED.value(), "리프레시 토큰이 만료되었습니다."));
     }
+
 }

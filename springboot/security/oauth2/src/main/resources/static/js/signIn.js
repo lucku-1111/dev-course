@@ -22,7 +22,7 @@ $(document).ready(() => {
             },
             error: function(xhr) {
                 let response = xhr.responseJSON;
-                alert(response && response.message ? response.message : '로그인 중 오류가 발생했습니다.');
+                alert(response && response.message ? response.message: '로그인 중 오류가 발생했습니다.');
             }
         });
 

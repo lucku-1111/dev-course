@@ -14,4 +14,5 @@ public class RefreshTokenResponseDto {
     private boolean validated;
     private String accessToken;
     private String refreshToken;
+
 }

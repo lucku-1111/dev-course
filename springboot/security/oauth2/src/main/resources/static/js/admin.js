@@ -20,7 +20,7 @@ let checkAdminAccess = async () => {
             await refreshTokens();
             renderAdmin(await getAdminAuthority());
         } catch (e2) {
-            e2.status === 403 ? denyAccess() : redirectToLogin();
+            e2.status === 403 ? denyAccess(): redirectToLogin();
         }
     }
 }

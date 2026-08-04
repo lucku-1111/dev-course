@@ -2,7 +2,7 @@ package com.example.spring.oauth2.config.oauth2;
 
 import java.util.Map;
 
-// record란?(Java 16+): 필드 나열만 하면 나머지 상용구를 컴파일러가 다 써주는, 불변 데이터 전용 클래스이다.
+// record란?(Java 16+): 필드 나열만 하면 나머지 상용구를 컴파일러가 다 써주는, 불편 데이터 전용 클래스이다.
 // 필드선언, 생성자, getter, equals/hashCode/toString까지 수십줄을 대신 해준다.
 // record인 이유: 상태는 응답 맵 하나뿐인 불변 값 객체이고,
 // 컴포넌트 이름을 attributes로 지으면 인터페이스 attributes()가 자동 구현된다.
@@ -25,32 +25,34 @@ public record KakaoUserInfo(
     @Override
     public String id() {
         Object id = attributes.get("id");
-        return id == null ? null : String.valueOf(id);
+        return id == null ? null: String.valueOf(id);
     }
 
     @Override
     public String email() {
-        Map<String, Object> kakaoAccount = kakaoAccount();
-        return kakaoAccount == null ? null : String.valueOf(kakaoAccount.get("email"));
+        Map<String, Object> kakaAccount = kakaAccount();
+        return kakaAccount == null ? null: String.valueOf(kakaAccount.get("email"));
     }
 
     @Override
     public String name() {
         Map<String, Object> profile = profile();
-        return profile == null ? null : String.valueOf(profile.get("nickname"));
+        return profile == null ? null: String.valueOf(profile.get("nickname"));
     }
 
     @Override
     public String imageUrl() {
         Map<String, Object> profile = profile();
-        return profile == null ? null : String.valueOf(profile.get("profile_image_url"));
+        return profile == null ? null: String.valueOf(profile.get("profile_image_url"));
     }
 
-    private Map<String, Object> kakaoAccount() {
+    // 중첩 구조 접근을 한 곳에서 모아둔다. 캐스팅이 반복되는 것도 여기서만 감수
+    private Map<String, Object> kakaAccount() {
         return (Map<String, Object>) attributes.get("kakao_account");
     }
 
     private Map<String, Object> profile() {
-        return (Map<String, Object>) kakaoAccount().get("profile");
+        return (Map<String, Object>) kakaAccount().get("profile");
     }
+
 }

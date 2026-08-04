@@ -13,12 +13,12 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(DuplicateUserIdException.class)
     public ResponseEntity<ErrorResponseDto> duplicateUserIdException(DuplicateUserIdException e) {
-        log.warn("409응답 : {}", e.getMessage());
+        log.warn("409응답: {}", e.getMessage());
         return ResponseEntity
                 .status(HttpStatus.CONFLICT)
                 .body(
-                        new ErrorResponseDto( HttpStatus.CONFLICT.value(), e.getMessage() )
-                );
+                        new ErrorResponseDto(HttpStatus.CONFLICT.value(), e.getMessage())
+               );
     }
 
 }

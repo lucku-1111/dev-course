@@ -9,10 +9,10 @@ $(document).ready(() => {
         let role = $('#role').val();
 
         let formData = {
-           userId : userId,
-           password : password,
-           userName : userName,
-           role : role
+           userId: userId,
+           password: password,
+           userName: userName,
+           role: role
         }
 
 

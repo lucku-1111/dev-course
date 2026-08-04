@@ -22,18 +22,37 @@ public class UserApiController {
     private final JwtProperties jwtProperties;
 
     @PostMapping("/join")
-    public SignUpResponseDto join(@RequestBody SignUpRequestDto request) {
-        userService.signUp(request);
+    public SignUpResponseDto join(@RequestBody SignUpRequestDto requestDto) {
+        userService.signUp(requestDto);
         return SignUpResponseDto.builder()
                 .url("/users/login")
                 .build();
+    }
+
+    @PostMapping("/oauth-join")
+    public SignInResponseDto oauthJoin(
+            @RequestBody OAuthSignUpRequestDto requestDto,
+            HttpServletResponse response
+   ) {
+
+        SignInResponseDto signInResponseDto = userService.oauthSignUp(requestDto);
+
+        CookieUtil.addCookie(
+                response,
+                CookieUtil.REFRESH_TOKEN_COOKIE,
+                signInResponseDto.getRefreshToken(),
+                (int) jwtProperties.getRefreshTokenValidity().toSeconds()
+       );
+        signInResponseDto.setRefreshToken(null);
+
+        return signInResponseDto;
     }
 
     @PostMapping("/login")
     public SignInResponseDto login(
             @RequestBody SignInRequestDto requestDto,
             HttpServletResponse response
-    ) {
+   ) {
         SignInResponseDto signInResponseDto = userService.login(requestDto);
 
         CookieUtil.addCookie(
@@ -41,7 +60,7 @@ public class UserApiController {
                 CookieUtil.REFRESH_TOKEN_COOKIE,
                 signInResponseDto.getRefreshToken(),
                 (int) jwtProperties.getRefreshTokenValidity().toSeconds()
-        );
+       );
 
         signInResponseDto.setRefreshToken(null);
 
@@ -52,7 +71,7 @@ public class UserApiController {
     public LogoutResponseDto logout(
             HttpServletRequest request,
             HttpServletResponse response
-    ) {
+   ) {
         CookieUtil.deleteCookie(request, response, CookieUtil.REFRESH_TOKEN_COOKIE);
         return LogoutResponseDto.builder()
                 .message("로그아웃 되었습니다.")
@@ -71,7 +90,7 @@ public class UserApiController {
                 .build();
     }
 
-    // "hasRole('USER')"는 내부적으로 "ROLE_USER"권한을 찾는다.(접두사 자동 부착)
+    // "hasRole('USER')"는 내부적으로 "ROLE_USER"권한을 찾는다(접두사 자동 부착)
     @PreAuthorize("hasRole('USER')")
     @GetMapping("/user")
     public AuthorityResponseDto authority() {

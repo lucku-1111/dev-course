@@ -60,7 +60,7 @@ $(document).ready(() => {
             error: (xhr) => {
                 // 토큰 만료(10분 초과) 등 — 소셜 로그인부터 다시
                 let response = xhr.responseJSON;
-                alert(response && response.message ? response.message : '가입 중 오류가 발생했습니다.');
+                alert(response && response.message ? response.message: '가입 중 오류가 발생했습니다.');
                 window.location.href = '/users/login';
             }
         });
