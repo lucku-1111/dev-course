@@ -3,3 +3,24 @@ server:
 spring:
   application:
     name: edge-service
+  cloud:
+    gateway:
+      server:
+        webmvc:
+          # 라우팅 규칙 - 위에서부터 순서대로 매칭되므로
+          # 포과 패턴(/api/**)은 반드시 마지막에 둔다.
+          routes:
+            - id: auth
+              uri: http://localhost:8082
+              predicates:
+                - Path=/api/auth/**,/api/users/**,/api/tokens/**
+            - id: oauth2-login
+              uri: http://localhost:8082
+              predicates:
+                - Path=/oauth2/**,/login/oauth2/**
+            # 이후 추가 패턴이 생기면 아래 포과 패턴 이전에 추가하라는 의미이다.
+            - id: board
+              uri: http://localhost:8081
+              predicates:
+                - Path=/api/**
+          trusted-proxies: "127\\.0\\.0\\.1|0:0:0:0:0:0:0:1|::1"

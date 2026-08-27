@@ -1,0 +1,7 @@
+# application.yaml -> "모든" 클라이언트 서비스에 적용
+# {서비스이름}.yaml -> 특정 서비스에 적용
+jwt:
+  secret_key: 4ukvJcQYxNY1X/9Ep4VsnXWhjkV/QzN/plJa24NcOf1pnLB+78OKrBG4LyAVGOHzzdo5sorkBA73Yo0/4urXIg==
+
+service:
+  token: msa-internal-3f9d2c8a71b64e05
