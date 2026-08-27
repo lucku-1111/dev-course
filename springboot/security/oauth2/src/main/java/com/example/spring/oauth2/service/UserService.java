@@ -60,6 +60,7 @@ public class UserService {
                 .build();
     }
 
+    @Transactional
     public SignInResponseDto oauthSignUp(OAuthSignUpRequestDto requestDto) {
 
         SignUpPayloadDto payload = tokenService.getSignupPayload(requestDto.getSignupToken());
@@ -92,8 +93,6 @@ public class UserService {
                 .build();
     }
 }
-
-
 
 
 

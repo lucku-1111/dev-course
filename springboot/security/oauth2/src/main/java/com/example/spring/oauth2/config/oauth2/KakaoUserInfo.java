@@ -54,5 +54,4 @@ public record KakaoUserInfo(
     private Map<String, Object> profile() {
         return (Map<String, Object>) kakaAccount().get("profile");
     }
-
 }

@@ -49,5 +49,5 @@ spring:
 jwt:
   issuer: test@naver.com
   secret_key: ${JWT_SECRET_KEY}
-  access-token-validity: 2h
+  access-token-validity: 30s
   refresh-token-validity: 7d
