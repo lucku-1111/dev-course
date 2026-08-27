@@ -3,3 +3,14 @@ server:
 spring:
   application:
     name: auth-service
+  # [설정 중앙화] 기동 시 config-service에서 공유 설정을 받아온다.
+  # optional : 접두사 = config server가 죽어 있어도 기동은 되게 한다.
+  # 운영이라면 optional을 떼서 "설정없이 뜨는 것"보다 "빨리 실패"를 택하는 게 보통이다.
+  # 지금은 개발 편의상 사용
+  config:
+    import: "optional:configserver:http://localhost:8888"
+  datasource:
+    url: jdbc:mysql://localhost:3306/board_auth?useSSL=false&serverTimezone=UTC&characterEncoding=UTF-8
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: 6731
