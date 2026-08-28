@@ -18,7 +18,6 @@ spring:
               uri: http://localhost:8082
               predicates:
                 - Path=/oauth2/**,/login/oauth2/**
-            # 이후 추가 패턴이 생기면 아래 포과 패턴 이전에 추가하라는 의미이다.
             - id: board
               uri: http://localhost:8081
               predicates:
