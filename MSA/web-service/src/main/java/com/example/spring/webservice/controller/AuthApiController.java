@@ -1,17 +1,12 @@
 package com.example.spring.webservice.controller;
 
-import com.example.spring.webservice.dto.SignInRequestDto;
-import com.example.spring.webservice.dto.SignInResponseDto;
-import com.example.spring.webservice.dto.SignUpRequestDto;
-import com.example.spring.webservice.dto.SignUpResponseDto;
+import com.example.spring.webservice.dto.*;
 import com.example.spring.webservice.service.AuthService;
 import com.example.spring.webservice.util.HeaderRelayUtil;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpHeaders;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -31,6 +26,13 @@ public class AuthApiController {
             HttpServletResponse response
     ) {
         return HeaderRelayUtil.relaySetCookie(authService.signIn(signInRequestDto), response);
+    }
+
+    @GetMapping("/info")
+    public UserInfoResponseDto getUserInfo(
+            @RequestHeader(value = HttpHeaders.AUTHORIZATION, required = false) String authorization
+    ) {
+        return authService.getUserInfo(authorization);
     }
 
 }

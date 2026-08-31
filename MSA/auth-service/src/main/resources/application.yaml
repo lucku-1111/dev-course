@@ -13,7 +13,7 @@ spring:
     url: jdbc:mysql://localhost:3306/board_auth?useSSL=false&serverTimezone=UTC&characterEncoding=UTF-8
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
-    password: 6731
+    password: 1234
   security:
     oauth2:
       client:
