@@ -48,7 +48,7 @@ public class SecurityConfig {
                                 "/api/users/login",
                                 "/api/tokens/refresh",
                                 "/api/users/oauth-join",
-                                "/api/users/name",
+                                "/api/users/names",
                                 "/error"
                         ).permitAll()
                         .anyRequest().authenticated()

@@ -6,6 +6,7 @@ import com.example.spring.authservice.domain.repository.UserRepository;
 import com.example.spring.authservice.dto.SignInRequestDto;
 import com.example.spring.authservice.dto.SignInResponseDto;
 import com.example.spring.authservice.dto.SignUpRequestDto;
+import com.example.spring.authservice.dto.UserNameResponseDto;
 import com.example.spring.authservice.exception.DuplicateUserIdException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -15,6 +16,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Slf4j
 @Service
@@ -59,6 +62,15 @@ public class UserService {
                 .userId(user.getUserId())
                 .userName(user.getName())
                 .build();
+    }
+
+    public List<UserNameResponseDto> getUserNames(List<String> userIds) {
+        return userRepository.findByUserIdIn(userIds).stream()
+                .map( user -> UserNameResponseDto.builder()
+                        .userId(user.getUserId())
+                        .userName(user.getName())
+                        .build())
+                .toList();
     }
 
 }

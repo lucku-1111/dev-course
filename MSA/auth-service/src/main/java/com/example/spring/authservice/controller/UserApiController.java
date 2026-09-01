@@ -11,6 +11,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/users")
@@ -58,6 +60,11 @@ public class UserApiController {
                 .userName(user.getName())
                 .role(user.getRole())
                 .build();
+    }
+
+    @GetMapping("/names")
+    public List<UserNameResponseDto> getUserNames(@RequestParam List<String> userIds) {
+        return userService.getUserNames(userIds);
     }
 
 }
