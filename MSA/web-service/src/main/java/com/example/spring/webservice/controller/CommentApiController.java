@@ -1,21 +1,25 @@
 package com.example.spring.webservice.controller;
 
 import com.example.spring.webservice.dto.CommentWriteRequestDto;
+import com.example.spring.webservice.service.CommentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api1/boards/{boardId}/comments")
+@RequestMapping("/api/boards/{boardId}/comments")
 public class CommentApiController {
+
+    private final CommentService commentService;
 
     @PostMapping
     public void addComment(
             @RequestHeader(value = HttpHeaders.AUTHORIZATION, required = false) String authorization,
-            @PathVariable("boardId") long boardId,
+            @PathVariable long boardId,
             @RequestBody CommentWriteRequestDto dto
             ) {
-
+        commentService.addComment(authorization, boardId, dto);
     }
+
 }

@@ -1,4 +1,4 @@
-package com.example.spring.webservice.dto;
+package com.example.spring.boardservice.dto;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

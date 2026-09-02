@@ -3,9 +3,11 @@ package com.example.spring.webservice.controller;
 import com.example.spring.webservice.dto.BoardPageResponseDto;
 import com.example.spring.webservice.dto.BoardSearchRequestDto;
 import com.example.spring.webservice.dto.BoardWithCommentsResponseDto;
+import com.example.spring.webservice.dto.BoardWriteRequestDto;
 import com.example.spring.webservice.service.BoardService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -35,4 +37,12 @@ public class BoardApiController {
         return boardService.getBoardWithComments(authorization, id);
     }
 
+
+    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public void saveBoard(
+            @RequestHeader(value = HttpHeaders.AUTHORIZATION, required = false) String authorization,
+            @ModelAttribute BoardWriteRequestDto dto
+    ) {
+        boardService.saveBoard(authorization, dto);
+    }
 }
