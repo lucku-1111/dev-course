@@ -2,10 +2,12 @@ package com.example.spring.webservice.client;
 
 import com.example.spring.webservice.dto.BoardPageResponseDto;
 import com.example.spring.webservice.dto.BoardSearchRequestDto;
+import com.example.spring.webservice.dto.BoardWithCommentsResponseDto;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.cloud.openfeign.SpringQueryMap;
 import org.springframework.http.HttpHeaders;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -25,6 +27,12 @@ public interface BoardClient {
             @SpringQueryMap BoardSearchRequestDto condition,
             @RequestParam("page") int page,
             @RequestParam("size") int size
+    );
+
+    @GetMapping("/api/boards/{id}/with-comments")
+    BoardWithCommentsResponseDto getBoardWithComments(
+            @RequestHeader(HttpHeaders.AUTHORIZATION) String authorization,
+            @PathVariable("id") long id
     );
 
 }

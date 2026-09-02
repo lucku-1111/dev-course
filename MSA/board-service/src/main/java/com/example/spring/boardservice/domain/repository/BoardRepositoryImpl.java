@@ -1,5 +1,6 @@
 package com.example.spring.boardservice.domain.repository;
 
+import com.example.spring.boardservice.domain.entity.Board;
 import com.example.spring.boardservice.domain.entity.QBoard;
 import com.example.spring.boardservice.domain.entity.QComment;
 import com.example.spring.boardservice.dto.BoardListItemResponseDto;
@@ -21,6 +22,7 @@ import org.springframework.stereotype.Repository;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
@@ -69,6 +71,18 @@ public class BoardRepositoryImpl implements BoardRepositoryCustom {
                 );
 
         return PageableExecutionUtils.getPage(content, pageable, countQuery::fetchOne);
+    }
+
+    @Override
+    public Optional<Board> findWithComments(Long id) {
+
+        Board result = queryFactory
+                .selectFrom(board)
+                .leftJoin(board.comments, comment).fetchJoin()
+                .where(board.id.eq(id))
+                .fetchOne();
+
+        return Optional.ofNullable(result);
     }
 
     // 제목 부분 일치 (Like %title%). 빈 값이면 조건 없음(null)

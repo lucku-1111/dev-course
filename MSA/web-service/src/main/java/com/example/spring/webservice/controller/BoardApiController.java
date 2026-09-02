@@ -2,6 +2,7 @@ package com.example.spring.webservice.controller;
 
 import com.example.spring.webservice.dto.BoardPageResponseDto;
 import com.example.spring.webservice.dto.BoardSearchRequestDto;
+import com.example.spring.webservice.dto.BoardWithCommentsResponseDto;
 import com.example.spring.webservice.service.BoardService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
@@ -24,6 +25,14 @@ public class BoardApiController {
             @RequestParam(defaultValue = "10") int size
     ){
         return boardService.searchBoard(authorization, boardSearchRequestDto, page, size);
+    }
+
+    @GetMapping("/{id}/with-comments")
+    public BoardWithCommentsResponseDto getBoardWithComments(
+            @RequestHeader(value = HttpHeaders.AUTHORIZATION, required = false) String authorization,
+            @PathVariable long id
+    ) {
+        return boardService.getBoardWithComments(authorization, id);
     }
 
 }

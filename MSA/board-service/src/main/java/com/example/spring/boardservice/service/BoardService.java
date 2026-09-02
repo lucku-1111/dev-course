@@ -23,6 +23,9 @@ public class BoardService {
     private final BoardRepository boardRepository;
     private final AuthClient authClient;
 
+    // repository는 userId까지만 채워서 돌려준다.
+    // 페이지에 등장한 userId를 "모아서 한 번" auth에 요청(벌크)
+    // 받은 DTO목록에서 이름을 찾아 채워 완성한다.
     public Page<BoardListItemResponseDto> searchBoards(BoardSearchRequestDto dto, Pageable pageable) {
 
         // searchBoards 게시글들 가져오기
@@ -40,7 +43,7 @@ public class BoardService {
                 userNameOf(userNameResponseDtos, item.getUserId()),
                 item.getCommentCount(),
                 item.getCreated()
-        ))ㄷ
+        ));
     }
 
     // auth가 죽어도 게시판 조회 자체는 살아야 하므로(부분 실패 허용)
