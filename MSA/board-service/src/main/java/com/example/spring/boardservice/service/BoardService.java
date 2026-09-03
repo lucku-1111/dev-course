@@ -5,6 +5,7 @@ import com.example.spring.boardservice.domain.entity.Board;
 import com.example.spring.boardservice.domain.repository.BoardRepository;
 import com.example.spring.boardservice.dto.BoardListItemResponseDto;
 import com.example.spring.boardservice.dto.BoardSearchRequestDto;
+import com.example.spring.boardservice.dto.BoardUpdateRequestDto;
 import com.example.spring.boardservice.dto.UserNameResponseDto;
 import com.example.spring.boardservice.exception.BoardNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -99,4 +100,27 @@ public class BoardService {
                         .build()
         );
     }
+
+    public Board getBoardDetail(long id) {
+        return boardRepository.findById(id)
+                .orElseThrow(
+                        () -> new BoardNotFoundException("[BOARD] 게시글을 찾을 수 없습니다. id = " + id)
+                );
+    }
+
+    public void updateBoard(long id, BoardUpdateRequestDto dto) {
+        Board board = boardRepository.findById(id)
+                .orElseThrow(
+                        () -> new BoardNotFoundException("[BOARD] 수정할 게시글을 찾을 수 없습니다. id = " + id)
+                );
+
+        String filePath = board.getFilePath();
+        if ( dto.isFileFlag() ) {
+            fileService.deleteFile(filePath);
+            filePath = fileService.storeFile(dto.getFile());
+        }
+
+        board.update(dto.getTitle(), dto.getContent(), filePath);
+    }
+
 }

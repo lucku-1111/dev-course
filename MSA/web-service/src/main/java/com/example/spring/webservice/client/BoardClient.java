@@ -1,9 +1,6 @@
 package com.example.spring.webservice.client;
 
-import com.example.spring.webservice.dto.BoardPageResponseDto;
-import com.example.spring.webservice.dto.BoardSearchRequestDto;
-import com.example.spring.webservice.dto.BoardWithCommentsResponseDto;
-import com.example.spring.webservice.dto.CommentWriteRequestDto;
+import com.example.spring.webservice.dto.*;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.cloud.openfeign.SpringQueryMap;
 import org.springframework.http.HttpHeaders;
@@ -50,4 +47,28 @@ public interface BoardClient {
             @RequestPart("userId") String userId,
             @RequestPart(value = "file", required = false) MultipartFile file
     );
+
+    @GetMapping("/api/boards/{id}")
+    BoardDetailResponseDto getBoardDetails(
+            @RequestHeader(HttpHeaders.AUTHORIZATION) String authorization,
+            @PathVariable long id
+    );
+
+    @PutMapping(value = "/api/boards/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    void updateBoard(
+            @RequestHeader(HttpHeaders.AUTHORIZATION) String authorization,
+            @PathVariable long id,
+            @RequestPart("title") String title,
+            @RequestPart("content") String content,
+            @RequestPart(value = "file", required = false) MultipartFile file,
+            @RequestPart("fileFlag") String fileFlag
+    );
+
+    @DeleteMapping("/api/boards/{id}")
+    void deleteBoard(
+            @RequestHeader(HttpHeaders.AUTHORIZATION) String authorization,
+            @PathVariable long id,
+            @RequestBody BoardDeleteRequestDto dto
+    );
+
 }

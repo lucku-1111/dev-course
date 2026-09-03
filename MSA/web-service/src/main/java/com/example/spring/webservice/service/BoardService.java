@@ -1,10 +1,7 @@
 package com.example.spring.webservice.service;
 
 import com.example.spring.webservice.client.BoardClient;
-import com.example.spring.webservice.dto.BoardPageResponseDto;
-import com.example.spring.webservice.dto.BoardSearchRequestDto;
-import com.example.spring.webservice.dto.BoardWithCommentsResponseDto;
-import com.example.spring.webservice.dto.BoardWriteRequestDto;
+import com.example.spring.webservice.dto.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -35,6 +32,25 @@ public class BoardService {
 
     private MultipartFile emptyToNull(MultipartFile file) {
         return (file == null || file.isEmpty()) ? null : file;
+    }
+
+    public BoardDetailResponseDto getBoardDetail(String authorization, long id) {
+        return boardClient.getBoardDetails(authorization, id);
+    }
+
+    public void updateBoard(String authorization, long id, BoardUpdateRequestDto dto) {
+        boardClient.updateBoard(
+                authorization,
+                id,
+                dto.getTitle(),
+                dto.getContent(),
+                emptyToNull(dto.getFile()),
+                String.valueOf(dto.isFileFlag())
+        );
+    }
+
+    public void deleteBoard(String authorization, long id, BoardDeleteRequestDto dto) {
+        boardClient.deleteBoard(authorization, id, dto);
     }
 
 }

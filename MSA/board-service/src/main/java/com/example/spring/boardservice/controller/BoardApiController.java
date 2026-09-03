@@ -1,10 +1,7 @@
 package com.example.spring.boardservice.controller;
 
 import com.example.spring.boardservice.domain.entity.Board;
-import com.example.spring.boardservice.dto.BoardListItemResponseDto;
-import com.example.spring.boardservice.dto.BoardSearchRequestDto;
-import com.example.spring.boardservice.dto.BoardWithCommentsResponseDto;
-import com.example.spring.boardservice.dto.BoardWriteRequestDto;
+import com.example.spring.boardservice.dto.*;
 import com.example.spring.boardservice.mapper.BoardMapper;
 import com.example.spring.boardservice.service.BoardService;
 import lombok.RequiredArgsConstructor;
@@ -39,6 +36,28 @@ public class BoardApiController {
     @PostMapping( consumes = MediaType.MULTIPART_FORM_DATA_VALUE )
     public void saveBoard(@ModelAttribute BoardWriteRequestDto dto) {
         boardService.saveBoard(dto.getUserId(), dto.getTitle(), dto.getContent(), dto.getFile());
+    }
+
+    @GetMapping("/{id}")
+    public BoardDetailResponseDto getBoardDetail(@PathVariable long id ) {
+
+        Board boardDetail = boardService.getBoardDetail(id);
+
+        return BoardDetailResponseDto.builder()
+                .title(boardDetail.getTitle())
+                .content(boardDetail.getContent())
+                .filePath(boardDetail.getFilePath())
+                .created(boardDetail.getCreated())
+                .userId(boardDetail.getUserId())
+                .build();
+    }
+
+    @PutMapping(value = "/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public void updateBoard(
+            @PathVariable long id,
+            @ModelAttribute BoardUpdateRequestDto dto
+    ) {
+        boardService.updateBoard(id, dto);
     }
 
 }
