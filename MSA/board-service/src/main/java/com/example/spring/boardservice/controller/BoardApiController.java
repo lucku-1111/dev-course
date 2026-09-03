@@ -4,11 +4,13 @@ import com.example.spring.boardservice.domain.entity.Board;
 import com.example.spring.boardservice.dto.BoardListItemResponseDto;
 import com.example.spring.boardservice.dto.BoardSearchRequestDto;
 import com.example.spring.boardservice.dto.BoardWithCommentsResponseDto;
+import com.example.spring.boardservice.dto.BoardWriteRequestDto;
 import com.example.spring.boardservice.mapper.BoardMapper;
 import com.example.spring.boardservice.service.BoardService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -32,6 +34,11 @@ public class BoardApiController {
     public BoardWithCommentsResponseDto getBoardComments(@PathVariable("id") long id) {
         Board board = boardService.getBoardWithComments(id);
         return boardMapper.toBoardWithCommentsResponseDto(board);
+    }
+
+    @PostMapping( consumes = MediaType.MULTIPART_FORM_DATA_VALUE )
+    public void saveBoard(@ModelAttribute BoardWriteRequestDto dto) {
+        boardService.saveBoard(dto.getUserId(), dto.getTitle(), dto.getContent(), dto.getFile());
     }
 
 }
