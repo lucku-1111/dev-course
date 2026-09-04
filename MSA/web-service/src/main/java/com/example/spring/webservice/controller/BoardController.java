@@ -26,8 +26,14 @@ public class BoardController {
     }
 
     @GetMapping("/update/{id}")
-    public String update(@PathVariable("id") Long id, Model model) {
+    public String update(@PathVariable Long id, Model model) {
         model.addAttribute("id", id);
         return "board/board-update";
     }
+
+    @GetMapping("/stats")
+    public String stats() {
+        return "board/board-stats";
+    }
+
 }

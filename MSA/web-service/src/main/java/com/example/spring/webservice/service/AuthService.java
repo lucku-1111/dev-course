@@ -3,10 +3,8 @@ package com.example.spring.webservice.service;
 import com.example.spring.webservice.client.AuthClient;
 import com.example.spring.webservice.dto.*;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestHeader;
 
 @Service
 @RequiredArgsConstructor
@@ -24,5 +22,13 @@ public class AuthService {
 
     public UserInfoResponseDto getUserInfo(String authorization) {
         return  authClient.getUserInfo(authorization);
+    }
+
+    public ResponseEntity<LogoutResponseDto> logout(String authorization, String cookie) {
+        return authClient.logout(authorization, cookie);
+    }
+
+    public ResponseEntity<RefreshTokenResponseDto> refreshToken(String cookie) {
+        return authClient.refreshToken(cookie);
     }
 }

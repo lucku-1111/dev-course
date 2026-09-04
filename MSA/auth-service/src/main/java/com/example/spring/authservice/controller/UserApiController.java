@@ -6,6 +6,7 @@ import com.example.spring.authservice.domain.entity.User;
 import com.example.spring.authservice.dto.*;
 import com.example.spring.authservice.service.UserService;
 import com.example.spring.authservice.util.CookieUtil;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -49,6 +50,18 @@ public class UserApiController {
         logined.setRefreshToken(null);
 
         return logined;
+    }
+
+    @PostMapping("/logout")
+    public LogoutResponseDto logout(
+            HttpServletRequest request,
+            HttpServletResponse response
+    ) {
+        CookieUtil.deleteCookie(request, response, CookieUtil.REFRESH_TOKEN_COOKIE);
+        return LogoutResponseDto.builder()
+                .url("/users/login")
+                .message("로그아웃이 되었습니다.")
+                .build();
     }
 
     @GetMapping("/info")

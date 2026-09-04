@@ -3,8 +3,10 @@ package com.example.spring.boardservice.domain.repository;
 import com.example.spring.boardservice.domain.entity.Board;
 import com.example.spring.boardservice.domain.entity.QBoard;
 import com.example.spring.boardservice.domain.entity.QComment;
+import com.example.spring.boardservice.dto.BoardAuthorStatsResponseDto;
 import com.example.spring.boardservice.dto.BoardListItemResponseDto;
 import com.example.spring.boardservice.dto.BoardSearchRequestDto;
+import com.example.spring.boardservice.dto.QBoardAuthorStatsResponseDto;
 import com.querydsl.core.Tuple;
 import com.querydsl.core.types.Expression;
 import com.querydsl.core.types.Projections;
@@ -83,6 +85,21 @@ public class BoardRepositoryImpl implements BoardRepositoryCustom {
                 .fetchOne();
 
         return Optional.ofNullable(result);
+    }
+
+    @Override
+    public List<BoardAuthorStatsResponseDto> countBoardsByAuthor(long minCount) {
+        return queryFactory
+                .select(new QBoardAuthorStatsResponseDto(
+                        board.userId,
+                        Expressions.nullExpression(String.class),
+                        board.count()
+                ))
+                .from(board)
+                .groupBy(board.userId)
+                .having(board.count().goe(minCount))
+                .orderBy(board.count().desc())
+                .fetch();
     }
 
     // 제목 부분 일치 (Like %title%). 빈 값이면 조건 없음(null)

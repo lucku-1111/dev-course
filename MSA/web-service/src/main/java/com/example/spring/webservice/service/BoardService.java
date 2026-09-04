@@ -3,8 +3,11 @@ package com.example.spring.webservice.service;
 import com.example.spring.webservice.client.BoardClient;
 import com.example.spring.webservice.dto.*;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -35,7 +38,7 @@ public class BoardService {
     }
 
     public BoardDetailResponseDto getBoardDetail(String authorization, long id) {
-        return boardClient.getBoardDetails(authorization, id);
+        return boardClient.getBoardDetail(authorization, id);
     }
 
     public void updateBoard(String authorization, long id, BoardUpdateRequestDto dto) {
@@ -53,4 +56,11 @@ public class BoardService {
         boardClient.deleteBoard(authorization, id, dto);
     }
 
+    public ResponseEntity<byte[]> downloadFile(String authorization, String fileName) {
+        return boardClient.downloadFile(authorization, fileName);
+    }
+
+    public List<BoardAuthorStatsResponseDto> getAuthorStats(String authorization, long minCount) {
+        return boardClient.getAuthorStats(authorization, minCount);
+    }
 }
