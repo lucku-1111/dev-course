@@ -155,4 +155,17 @@ public class BoardService {
                 ))
                 .toList();
     }
+
+    public void deleteUserContents(String userId) {
+        // 내 글에 달린 남의 댓글
+        long commentsOnBoards = commentRepository.deleteByBoardUserId(userId);
+
+        // 남의 글에 단 내 댓글
+        long myComments = commentRepository.deleteByUserId(userId);
+
+        // 내 게시글
+        long myBoards = boardRepository.deleteByUserId(userId);
+
+        log.info("[탈퇴 처리] userId : {}, 글 {}건, 댓글 {}건 삭제", userId, myBoards, (commentsOnBoards + myComments));
+    }
 }

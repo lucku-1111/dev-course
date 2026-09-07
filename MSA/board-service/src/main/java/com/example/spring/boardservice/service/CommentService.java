@@ -25,7 +25,7 @@ public class CommentService {
     @Transactional
     public void addComment(Long boardId, CommentWriteRequestDto dto) {
 
-        // 게시글 찾기
+        // 게시글을 먼저 찾는다.
         Board board = boardRepository.findById(boardId)
                 .orElseThrow(() -> new BoardNotFoundException("Board not found. Id: " + boardId));
 
@@ -40,5 +40,6 @@ public class CommentService {
 
         log.info("댓글 등록 : commentId : {}", comment.getId());
     }
+
 
 }

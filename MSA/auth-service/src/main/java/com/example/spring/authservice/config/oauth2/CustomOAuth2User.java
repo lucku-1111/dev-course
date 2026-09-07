@@ -4,6 +4,7 @@ import com.example.spring.authservice.domain.entity.User;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 
 import java.util.Collection;
@@ -22,21 +23,33 @@ public class CustomOAuth2User implements OAuth2User {
 
     private final Map<String, Object> attributes;
 
+    private final String nameAttributeKey;
 
+    public static CustomOAuth2User unregistered(AuthProvider provider, OAuth2UserInfo userInfo, Map<String, Object> attributes, String nameAttributeKey) {
+        return new CustomOAuth2User(null, provider, userInfo, attributes, nameAttributeKey);
+    }
 
+    public boolean isRegistered() {
+        return user != null;
+    }
 
     @Override
     public Map<String, Object> getAttributes() {
-        return Map.of();
+        return attributes;
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of();
+
+        if ( user == null ) {
+            return List.of(new SimpleGrantedAuthority("ROLE_GUEST"));
+        }
+
+        return List.of(new SimpleGrantedAuthority(user.getRole().name()));
     }
 
     @Override
     public String getName() {
-        return "";
+        return String.valueOf(attributes.get(nameAttributeKey));
     }
 }

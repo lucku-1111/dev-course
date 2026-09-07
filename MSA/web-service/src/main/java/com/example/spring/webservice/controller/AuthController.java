@@ -18,4 +18,8 @@ public class AuthController {
         return "/auth/login";
     }
 
+    @GetMapping("/oauth-join")
+    public String oauthJoin() {
+        return "/auth/oauth-join";
+    }
 }
