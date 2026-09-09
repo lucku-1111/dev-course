@@ -41,6 +41,15 @@ import kotlin.system.measureTimeMillis
 // - 시작점이 필요하다. 그 시작점을 만들어 주는 것이 코루틴 빌더이다.
 
 // 종류
+// delay(ms) : 그 시간만큼 멈췄다가 이어서 진행
+// await() : async가 돌려준 Deferred의 결과가 나올 때까지 기다린다.
+// awaitAll() : Deferred 여러 개를 한꺼번에 기다린다.
+// Job.join() : launch 로 띄운 코루틴이 끝날 때까지 기다린다. Thread.join의 코루틴 버전
+// cancelAndJoin() : 취소 신호를 보내고, 실제로 정리가 끝날 때까지 기다린다.
+
+// 스코프 안에서 launch, async를 쓸 수 있게 해준다.
+// coroutineScope { } : 자식이 전부 끝나야 빠져나간다. 하나가 죽으면 형제도 취소된다.
+// withTimeoutOrNull { } : 시간 안에 못 끝내면 null을 돌려준다.
 
 // 4. 코루틴 빌더
 // - runBlocking { } : 보통함수 안에서 suspend함수를 부를 수 있게 해준다.
