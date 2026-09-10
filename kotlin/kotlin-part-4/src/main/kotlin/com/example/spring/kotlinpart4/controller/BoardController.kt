@@ -9,4 +9,6 @@ class BoardController {
     @GetMapping("/")
     fun boardList(): String = "board-list"
 
+    @GetMapping("/write")
+    fun write(): String = "board-write"
 }
