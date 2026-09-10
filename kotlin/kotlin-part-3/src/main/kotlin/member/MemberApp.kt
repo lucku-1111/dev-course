@@ -16,6 +16,7 @@ class MemberApp(private val manager: MemberManager) {
                 5 -> updateMember()
                 6 -> deleteMember()
                 7 -> searchByName()
+                8 -> printStatics()
                 9 -> {
                     println("이용해주셔서 감사합니다.")
                     return
@@ -158,6 +159,35 @@ class MemberApp(private val manager: MemberManager) {
         println("${found.size}명을 찾았습니다.")
         found.forEachIndexed { index, member ->
             println("${index + 1}. ${member.display}")
+        }
+
+    }
+
+    private fun printStatics() {
+
+        if ( manager.memberCnt == 0 ) {
+            println("등록된 회원이 없습니다.")
+            return
+        }
+
+        println("[이메일 도메인별]")
+        manager.groupByDomain().forEach {
+                (domain, members) ->
+            println(" $domain : ${members.size}명 ${ members.joinToString(", ") { it.name } } ")
+        }
+
+        println("[이름순]")
+        println( " ${ manager.sortedByName().joinToString( ", ") { it.name } }" )
+
+        val duplicatedNames = manager.duplicatedNames()
+        if (duplicatedNames.isNotEmpty()) {
+
+            println("[이름이 겹치는 회원]")
+            duplicatedNames.forEach {
+                (name, members) ->
+                println(" $name : ${members.size}명 ${ members.joinToString(", ") { it.email } } ")
+            }
+
         }
 
     }

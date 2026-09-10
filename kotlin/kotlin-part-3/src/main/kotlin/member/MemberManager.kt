@@ -76,4 +76,14 @@ class MemberManager(planNo: Int) {
         return true
     }
 
+    // substringAfter
+    // a@naver.com -> "naver.com"
+    // test -> (도메인없음)
+    // 못 찾으면 원본을 그대로 돌려주는 것이 기본 동작이라, 그냥 두면 통계에 이름 아닌 값이 섞인다.
+    fun groupByDomain(): Map<String, List<Member>> = members.groupBy { it.email.substringAfter("@", "(도메인없음)") }
+
+    fun sortedByName(): List<Member> = members.sortedBy { it.name }
+
+    fun duplicatedNames(): Map<String, List<Member>> = members.groupBy { it.name }.filter { it.value.size > 1 }
+
 }
