@@ -2,13 +2,11 @@ package com.example.spring.kotlinpart4.controller
 
 import com.example.spring.kotlinpart4.dto.BoardCreateRequest
 import com.example.spring.kotlinpart4.dto.BoardPageResponse
+import com.example.spring.kotlinpart4.dto.BoardResponse
+import com.example.spring.kotlinpart4.dto.BoardUpdateRequest
 import com.example.spring.kotlinpart4.service.BoardService
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RequestParam
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.http.ResponseEntity
+import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/api/boards")
@@ -24,6 +22,28 @@ class BoardApiController(private val boardService: BoardService) {
     @PostMapping
     fun createBoard(@RequestBody request: BoardCreateRequest) {
         boardService.createBoard(request)
+    }
+
+    @GetMapping("/{id}")
+    fun getBoard(@PathVariable("id") id: Long): ResponseEntity<BoardResponse> {
+
+        val board = boardService.getBoard(id) ?: return ResponseEntity.notFound().build()
+
+        return ResponseEntity.ok(BoardResponse.from(board))
+    }
+
+    @PutMapping("/{id}")
+    fun updateBoard(
+        @PathVariable("id") id: Long,
+        @RequestBody request: BoardUpdateRequest
+    ) {
+        boardService.updateBoard(id, request)
+    }
+
+    @DeleteMapping("/{id}")
+    fun deleteBoard(@PathVariable("id") id: Long) {
+        println("$id is deleted")
+        boardService.deleteBoard(id)
     }
 
 }

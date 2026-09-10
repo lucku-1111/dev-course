@@ -58,3 +58,28 @@ data class BoardCreateRequest(
     )
 
 }
+
+data class BoardResponse(
+    val id: Long,
+    val title: String,
+    val content: String,
+    val userId: String,
+    val created: String,
+) {
+
+    companion object {
+        fun from(board: Board): BoardResponse = BoardResponse(
+            id = board.id!!,
+            title = board.title,
+            content = board.content,
+            userId = board.userId,
+            created = board.created.format(DATE_FORMAT)
+        )
+    }
+
+}
+
+data class BoardUpdateRequest(
+    val title: String,
+    val content: String,
+)
