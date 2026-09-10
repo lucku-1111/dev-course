@@ -1,7 +1,9 @@
 package com.example.spring.kotlinpart4.controller
 
 import org.springframework.stereotype.Controller
+import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.RequestParam
 
 @Controller
 class BoardController {
@@ -11,4 +13,11 @@ class BoardController {
 
     @GetMapping("/write")
     fun write(): String = "board-write"
+
+    @GetMapping("/detail")
+    fun detail(@RequestParam("id") id: Long, model: Model): String {
+        model.addAttribute("id", id)
+        return "board-detail"
+    }
+
 }

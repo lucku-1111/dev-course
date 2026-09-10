@@ -2,6 +2,7 @@ package com.example.spring.kotlinpart4.service
 
 import com.example.spring.kotlinpart4.domain.entity.Board
 import com.example.spring.kotlinpart4.domain.repository.BoardRepository
+import com.example.spring.kotlinpart4.dto.BoardCreateRequest
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Pageable
@@ -22,6 +23,11 @@ class BoardService (private val repository: BoardRepository) {
         } else {
             repository.findByTitleContaining(keyword, pageable)
         }
+    }
+
+    @Transactional
+    fun createBoard(request: BoardCreateRequest) {
+        repository.save( request.toEntity() )
     }
 
 }

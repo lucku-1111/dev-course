@@ -44,3 +44,17 @@ data class BoardListItemResponse(
     }
 
 }
+
+data class BoardCreateRequest(
+    val title: String,
+    val content: String,
+    val userId: String,
+) {
+
+    fun toEntity(): Board = Board(
+        title = title,
+        content = content,
+        userId = userId,
+    )
+
+}
