@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 470" width="1100" height="470" font-family="'Apple SD Gothic Neo','Malgun Gothic','Noto Sans KR',sans-serif">
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#555"/></marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#2E7D32"/></marker>
+  </defs>
+  <rect width="1100" height="470" fill="#FFFFFF"/>
+  <text x="550" y="32" text-anchor="middle" font-size="20" font-weight="bold" fill="#232F3E">수동 배포(09.29) vs 자동 배포 CD(09.30) — 사람이 하던 일을 GitHub Actions가 대신</text>
+
+  <!-- manual -->
+  <rect x="20" y="55" width="1060" height="165" rx="12" fill="#FFF8E1" stroke="#F9A825" stroke-width="2"/>
+  <text x="40" y="82" font-size="15" font-weight="bold" fill="#F57F17">지금까지: 수동 배포 — 매번 내가 직접</text>
+  <g font-size="13" text-anchor="middle">
+    <rect x="40" y="100" width="170" height="70" rx="8" fill="#FFFFFF" stroke="#BDBDBD"/>
+    <text x="125" y="130" font-weight="bold" fill="#232F3E">① git push</text>
+    <text x="125" y="152" fill="#666">내 PC</text>
+    <rect x="250" y="100" width="170" height="70" rx="8" fill="#FFFFFF" stroke="#D32F2F" stroke-width="2"/>
+    <text x="335" y="130" font-weight="bold" fill="#C62828">② ssh 접속 👤</text>
+    <text x="335" y="152" fill="#666">내가 터미널로</text>
+    <rect x="460" y="100" width="170" height="70" rx="8" fill="#FFFFFF" stroke="#D32F2F" stroke-width="2"/>
+    <text x="545" y="130" font-weight="bold" fill="#C62828">③ cd ~/app/docker 👤</text>
+    <text x="545" y="152" fill="#666">폴더 이동</text>
+    <rect x="670" y="100" width="170" height="70" rx="8" fill="#FFFFFF" stroke="#D32F2F" stroke-width="2"/>
+    <text x="755" y="130" font-weight="bold" fill="#C62828">④ ./deploy.sh 👤</text>
+    <text x="755" y="152" fill="#666">pull → build → up</text>
+    <rect x="880" y="100" width="180" height="70" rx="8" fill="#FFFFFF" stroke="#BDBDBD"/>
+    <text x="970" y="130" font-weight="bold" fill="#232F3E">⑤ 반영 완료</text>
+    <text x="970" y="152" fill="#666">서버에 새 코드</text>
+  </g>
+  <g stroke="#555" stroke-width="2.5" marker-end="url(#a)">
+    <line x1="210" y1="135" x2="247" y2="135"/>
+    <line x1="420" y1="135" x2="457" y2="135"/>
+    <line x1="630" y1="135" x2="667" y2="135"/>
+    <line x1="840" y1="135" x2="877" y2="135"/>
+  </g>
+  <text x="550" y="200" text-anchor="middle" font-size="13" fill="#C62828">👤 빨간 칸 = 사람이 매번 반복 → 빠뜨리기 쉽고, 누가 언제 배포했는지 기록도 없음</text>
+
+  <!-- auto -->
+  <rect x="20" y="240" width="1060" height="215" rx="12" fill="#E8F5E9" stroke="#43A047" stroke-width="2"/>
+  <text x="40" y="267" font-size="15" font-weight="bold" fill="#2E7D32">오늘: 자동 배포 (CD) — push만 하면 끝</text>
+  <g font-size="13" text-anchor="middle">
+    <rect x="40" y="290" width="170" height="80" rx="8" fill="#FFFFFF" stroke="#BDBDBD"/>
+    <text x="125" y="322" font-weight="bold" fill="#232F3E">① git push</text>
+    <text x="125" y="344" fill="#666">내가 하는 건 이것뿐</text>
+    <rect x="265" y="280" width="560" height="100" rx="10" fill="#FFFFFF" stroke="#2E7D32" stroke-width="2"/>
+    <text x="545" y="304" font-weight="bold" fill="#2E7D32">GitHub Actions 러너 🤖 (GitHub의 임시 컴퓨터)</text>
+    <text x="545" y="324" fill="#444">.github/workflows/deploy.yml 을 읽고 그대로 실행</text>
+    <rect x="285" y="336" width="160" height="34" rx="6" fill="#E8F5E9" stroke="#A5D6A7"/>
+    <text x="365" y="358" fill="#232F3E">② ssh 접속 🤖</text>
+    <rect x="465" y="336" width="160" height="34" rx="6" fill="#E8F5E9" stroke="#A5D6A7"/>
+    <text x="545" y="358" fill="#232F3E">③ cd ~/app/docker 🤖</text>
+    <rect x="645" y="336" width="160" height="34" rx="6" fill="#E8F5E9" stroke="#A5D6A7"/>
+    <text x="725" y="358" fill="#232F3E">④ ./deploy.sh 🤖</text>
+    <rect x="880" y="290" width="180" height="80" rx="8" fill="#FFFFFF" stroke="#BDBDBD"/>
+    <text x="970" y="322" font-weight="bold" fill="#232F3E">⑤ 반영 완료</text>
+    <text x="970" y="344" fill="#666">Actions 탭에 기록 ✅</text>
+  </g>
+  <g stroke="#2E7D32" stroke-width="2.5" marker-end="url(#g)">
+    <line x1="210" y1="330" x2="262" y2="330"/>
+    <line x1="825" y1="330" x2="877" y2="330"/>
+  </g>
+  <g font-size="13" fill="#444">
+    <text x="40" y="410">• 배포 순서는 똑같다 — 실행하는 주체만 사람 👤 → 러너 🤖 로 바뀜 (deploy.sh 는 그대로 재사용)</text>
+    <text x="40" y="435">• 우리 전략: <tspan font-weight="bold">CD만</tspan> 한다. 빌드(CI 역할)는 서버의 deploy.sh 안에서 이미 하고 있으니까</text>
+  </g>
+</svg>

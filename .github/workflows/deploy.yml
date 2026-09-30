@@ -1,0 +1,69 @@
+
+# CI/CD 란?
+
+# CI (Continuous Integration, 지속적 통합)
+# - 여러 사람이 올린 코드를 "자주" 합치고, 합칠 때마다 자동으로 빌드/테스트해서 깨진 코드를 빨리 발견하는 것
+# push할 때마다 ./gradlew build /test 자동 실행 -> 실패 하면 바로 알림
+
+# CD (Continuous Delivery/Deployment, 지속적 전달/배포)
+# - 통과한 코드를 서버까지 "자동으로" 내보내는 것.
+
+# 왜 사용하나?
+# 수동 배포(ssh접속 -> git clone/pull -> build -> up) 사람이 매번 같은 순서를 반복하면 빠뜨리기 쉽다.
+# 자동화면 push 만으로 항상 같은 절차가 진행되고, 언제 누가 무엇을 배포했는지 기록이 남는다.
+
+# 우리 전략
+# CD만 한다 : push되면 서버에 접속해서 배포 스크립트 실행
+# CI -> deploy.sh 안에서 이뤄진다.
+
+# GitHub Actions = GitHub가 제공하는 CI/CD 도구
+# 저장소에 .yml 파일(워크플로)만 두면, 정해진 이벤트(push 등)마다 GitHub 서버(러너)가 대신 실행
+# 비슷한 도구 : Jenkins, GitLab CI, AWS CodePipeline,...
+
+# GitHub Actions - EC2 자동 배포
+# git push -> GitHub Actions -> SSH로 msa-app접속 -> deploy.sh(git pull -> docker build -> docker up -d)
+# 파일 위치 규칙 : 저장소의 루트트 .github/workflows/ 안의 .yml 만 github가 인식한다.
+
+# Actions 탭에 표시될 워크플로 이름
+name: Deploy to EC2
+
+# 언제 실행할지(트리거)
+on:
+    push:
+        branches:
+            - deploy-test # 이 브랜치에 push할 때만 실행(test브랜치로 사용하고 싶으면 test로 변경하면된다.)
+        # 아래 경로의 파일이 바뀐 push만
+        # - 수업 자료(md 등)만 바꾼 push로는 배포하지 않는다.
+        # - ** : 하위 폴더까지 전부
+        paths:
+            - "msa/**"
+            - "docker/**"
+            - ".github/workflows/deploy.yml"
+    # Actions 탭의 "Run workflow" 버튼으로 수동 실행도 가능하게 한다.
+    # 코드 변경 없이 다시 배포(.env만 수정 등), 실패한 배포 재시도, paths 에 안 걸린 push
+    workflow_dispatch:
+
+# 무엇을 할지
+jobs:
+    deploy:
+        # 어떤 머신에서 돌릴지
+        runs-on: ubuntu-latest
+        # 순서대로 실행할 단계들
+        steps:
+            - name: Deploy to msa-app
+              # uses : 다른사람이 만들어 둔 Action(재사용)을 가져다 쓴다.
+              # appleboy/ssh-action@v1 : "SSH로 원격 서버에 접속해 명령을 실행" 하는 공개 Action
+              # 보안그룹 : msa-app-sg에 ssh - 0.0.0.0/0 허용으로 바꿀 것
+              uses: appleboy/ssh-action@v1
+              # with : 그 Action에 넘기는 입력값
+              with:
+                # ${{ secrets.이름 }} : 저장소 Settings -> Secrets and variables -> Actions -> Repository secrets에 등록한 값
+                host: ${{ secrets.EC2_HOST }} # msa-app eip
+                username: ubuntu 
+                # cat ~/Desktop/msa-key.pem -> '%' 반드시 제거 or 메모장으로 열기
+                key: ${{ secrets.EC2_SSH_KEY }} # msa-key.pem
+                command_timeout: 40m # 기본 10분 -> 40분으로 늘림. 서버 빌드시간
+                # | : 여러 줄을 그대로
+                script: |
+                    cd ~/app/docker
+                    ./deploy.sh

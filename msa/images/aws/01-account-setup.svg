@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 250" width="1000" height="250" font-family="'Apple SD Gothic Neo','Malgun Gothic','Noto Sans KR',sans-serif">
+  <defs>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#FF9900"/>
+    </marker>
+  </defs>
+  <rect width="1000" height="250" fill="#FFFFFF"/>
+  <text x="500" y="34" text-anchor="middle" font-size="20" font-weight="bold" fill="#232F3E">AWS 계정 생성 후 처음 할 일 (서버 만들기 전에!)</text>
+
+  <g font-size="13" fill="#444">
+    <!-- 1 -->
+    <rect x="15" y="60" width="170" height="160" rx="12" fill="#FFF3E0" stroke="#FF9900" stroke-width="2"/>
+    <circle cx="100" cy="88" r="16" fill="#FF9900"/><text x="100" y="94" text-anchor="middle" font-size="16" font-weight="bold" fill="#fff">1</text>
+    <text x="100" y="132" text-anchor="middle" font-size="16" font-weight="bold" fill="#232F3E">루트 계정 MFA</text>
+    <text x="100" y="160" text-anchor="middle">로그인할 때</text>
+    <text x="100" y="180" text-anchor="middle">휴대폰 OTP 추가</text>
+    <text x="100" y="205" text-anchor="middle" fill="#D32F2F">해킹 방지 1순위</text>
+    <!-- 2 -->
+    <rect x="215" y="60" width="170" height="160" rx="12" fill="#FFF3E0" stroke="#FF9900" stroke-width="2"/>
+    <circle cx="300" cy="88" r="16" fill="#FF9900"/><text x="300" y="94" text-anchor="middle" font-size="16" font-weight="bold" fill="#fff">2</text>
+    <text x="300" y="132" text-anchor="middle" font-size="16" font-weight="bold" fill="#232F3E">크레딧·요금제 확인</text>
+    <text x="300" y="160" text-anchor="middle">무료 크레딧 잔액과</text>
+    <text x="300" y="180" text-anchor="middle">만료일 확인</text>
+    <text x="300" y="205" text-anchor="middle" fill="#666">결제 및 비용 관리</text>
+    <!-- 3 -->
+    <rect x="415" y="60" width="170" height="160" rx="12" fill="#FFF3E0" stroke="#FF9900" stroke-width="2"/>
+    <circle cx="500" cy="88" r="16" fill="#FF9900"/><text x="500" y="94" text-anchor="middle" font-size="16" font-weight="bold" fill="#fff">3</text>
+    <text x="500" y="132" text-anchor="middle" font-size="16" font-weight="bold" fill="#232F3E">예산 알림 설정</text>
+    <text x="500" y="160" text-anchor="middle">예: 월 $10를 넘으면</text>
+    <text x="500" y="180" text-anchor="middle">이메일로 알림</text>
+    <text x="500" y="205" text-anchor="middle" fill="#666">요금 폭탄 방지</text>
+    <!-- 4 -->
+    <rect x="615" y="60" width="170" height="160" rx="12" fill="#FFF3E0" stroke="#FF9900" stroke-width="2"/>
+    <circle cx="700" cy="88" r="16" fill="#FF9900"/><text x="700" y="94" text-anchor="middle" font-size="16" font-weight="bold" fill="#fff">4</text>
+    <text x="700" y="132" text-anchor="middle" font-size="16" font-weight="bold" fill="#232F3E">IAM 사용자 생성</text>
+    <text x="700" y="160" text-anchor="middle">평소에 쓸</text>
+    <text x="700" y="180" text-anchor="middle">관리자 계정</text>
+    <text x="700" y="205" text-anchor="middle" fill="#666">루트는 금고에 보관</text>
+    <!-- 5 -->
+    <rect x="815" y="60" width="170" height="160" rx="12" fill="#E8F5E9" stroke="#43A047" stroke-width="2"/>
+    <circle cx="900" cy="88" r="16" fill="#43A047"/><text x="900" y="94" text-anchor="middle" font-size="16" font-weight="bold" fill="#fff">5</text>
+    <text x="900" y="132" text-anchor="middle" font-size="16" font-weight="bold" fill="#232F3E">IAM 로그인 + 서울</text>
+    <text x="900" y="160" text-anchor="middle">리전을 서울</text>
+    <text x="900" y="180" text-anchor="middle">(ap-northeast-2)로</text>
+    <text x="900" y="205" text-anchor="middle" fill="#2E7D32" font-weight="bold">실습 시작!</text>
+  </g>
+
+  <g stroke="#FF9900" stroke-width="3" marker-end="url(#arr)">
+    <line x1="187" y1="140" x2="212" y2="140"/>
+    <line x1="387" y1="140" x2="412" y2="140"/>
+    <line x1="587" y1="140" x2="612" y2="140"/>
+    <line x1="787" y1="140" x2="812" y2="140"/>
+  </g>
+</svg>

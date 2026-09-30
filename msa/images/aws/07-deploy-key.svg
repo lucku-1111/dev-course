@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 380" width="1000" height="380" font-family="'Apple SD Gothic Neo','Malgun Gothic','Noto Sans KR',sans-serif">
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#232F3E"/></marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#2E7D32"/></marker>
+  </defs>
+  <rect width="1000" height="380" fill="#FFFFFF"/>
+  <text x="500" y="32" text-anchor="middle" font-size="20" font-weight="bold" fill="#232F3E">GitHub Deploy Key — 서버가 비밀번호 없이 git pull 하는 원리</text>
+
+  <!-- server -->
+  <rect x="30" y="65" width="330" height="230" rx="12" fill="#E8F5E9" stroke="#43A047" stroke-width="2"/>
+  <text x="195" y="97" text-anchor="middle" font-size="17" font-weight="bold" fill="#232F3E">EC2 msa-app</text>
+  <text x="195" y="120" text-anchor="middle" font-size="12" fill="#666">ssh-keygen -t ed25519 ... -f ~/.ssh/github_deploy</text>
+
+  <rect x="55" y="140" width="280" height="60" rx="8" fill="#FFFFFF" stroke="#D32F2F" stroke-width="2"/>
+  <text x="75" y="166" font-size="14" font-weight="bold" fill="#C62828">🔑 개인키  github_deploy</text>
+  <text x="75" y="188" font-size="12" fill="#444">"열쇠" · 서버 밖으로 절대 내보내지 않음</text>
+
+  <rect x="55" y="215" width="280" height="60" rx="8" fill="#FFFFFF" stroke="#1E88E5" stroke-width="2"/>
+  <text x="75" y="241" font-size="14" font-weight="bold" fill="#1565C0">🔒 공개키  github_deploy.pub</text>
+  <text x="75" y="263" font-size="12" fill="#444">"자물통" · 남에게 보여줘도 안전</text>
+
+  <!-- github -->
+  <rect x="640" y="65" width="330" height="230" rx="12" fill="#F5F5F5" stroke="#424242" stroke-width="2"/>
+  <text x="805" y="97" text-anchor="middle" font-size="17" font-weight="bold" fill="#232F3E">GitHub 저장소</text>
+  <text x="805" y="120" text-anchor="middle" font-size="12" fill="#666">Settings → Deploy keys</text>
+  <rect x="665" y="140" width="280" height="60" rx="8" fill="#FFFFFF" stroke="#1E88E5" stroke-width="2"/>
+  <text x="685" y="166" font-size="14" font-weight="bold" fill="#1565C0">🔒 등록된 공개키</text>
+  <text x="685" y="188" font-size="12" fill="#444">msa-app-deploy (읽기 전용)</text>
+  <rect x="665" y="215" width="280" height="60" rx="8" fill="#FFFFFF" stroke="#9E9E9E"/>
+  <text x="685" y="241" font-size="14" font-weight="bold" fill="#232F3E">📦 소스 코드</text>
+  <text x="685" y="263" font-size="12" fill="#444">msa/ · docker/ ...</text>
+
+  <!-- arrows -->
+  <g stroke-width="2.5" fill="none">
+    <path d="M335 245 C 480 245, 500 170, 662 170" stroke="#1E88E5" marker-end="url(#a)"/>
+    <path d="M335 155 L 636 105" stroke="#232F3E" marker-end="url(#a)"/>
+    <path d="M662 262 L 366 290" stroke="#2E7D32" marker-end="url(#g)"/>
+  </g>
+  <g font-size="13" text-anchor="middle">
+    <rect x="410" y="185" width="180" height="26" rx="5" fill="#E3F2FD"/>
+    <text x="500" y="203" fill="#1565C0" font-weight="bold">① cat .pub → 복사해서 등록</text>
+    <text x="486" y="116" fill="#232F3E" font-weight="bold">② git pull (개인키로 서명)</text>
+    <text x="512" y="300" fill="#2E7D32" font-weight="bold">③ 검증 통과 → 코드 전송</text>
+  </g>
+
+  <!-- steps bottom -->
+  <rect x="30" y="315" width="940" height="52" rx="10" fill="#FAFAFA" stroke="#E0E0E0"/>
+  <g font-size="13" fill="#333">
+    <text x="50" y="338"><tspan font-weight="bold" fill="#1565C0">① 등록</tspan>  공개키를 GitHub에 붙여넣기</text>
+    <text x="360" y="338"><tspan font-weight="bold" fill="#232F3E">② git pull</tspan>  서버가 개인키로 "서명"해서 보냄</text>
+    <text x="690" y="338"><tspan font-weight="bold" fill="#2E7D32">③ 검증</tspan>  GitHub이 공개키로 확인 → 통과</text>
+    <text x="500" y="358" text-anchor="middle" fill="#888" font-size="12">개인키 자체는 네트워크로 전송되지 않는다 · ~/.ssh/config 로 "github.com 접속엔 이 키를 써라" 지정</text>
+  </g>
+</svg>

@@ -1,0 +1,77 @@
+
+name: msa-data
+
+# 네트워크 선언
+# - 서비스 compose(docker-compose.service.yml)와 컨테이너끼리 통신하려면
+#   동일한 네트워크를 사용해야 한다. 그 공용 네트워크를 여기선 만든다.
+# - 이 파일이 네트워크의 주인이다. 그래서 data를 반드시 먼저 실행해야(up) 한다.
+networks:
+  msa-network:
+    name: msa-network
+
+services:
+  mysql:
+    # Docker Hub 공식 MySQL 이미지
+    image: mysql:9.4
+    container_name: mysql
+
+    # 컨테이너가 시작될 때 실행할 명령어
+    # 서버 기본 문자셋
+    # - MySQL 이미지의 기본 클라이언트 문자셋이 latin1이라, 이걸 지정하지 않으면
+    #   db/*.sql 의 한글이 깨친 채로 저장된다.
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+
+    # 컨테이너 안으로 전달될 환경변수
+    environment:
+      # root 계정 비밀번호
+      MYSQL_ROOT_PASSWORD: 1234
+    
+    # 포트매핑 "호스트포트:컨테이너포트"
+    # - 컨테이너 내부 MySQL은 3306에서 동작
+    # - 호스트(내 PC)에서 3307로 접속 -> 컨테이너 내부 3306으로 접속
+    ports:
+      - "3307:3306"
+   
+    # 볼륨 마운트 "왼쪽:오른쪽[:옵션]"
+    # - 왼쪽 : 물리 저장소 - 파일이 실제 쌓이는 곳
+    # - 오른쪽 : 논리 주소 - 컨테이너 안에서 그 저장소가 보이는 경로
+    volumes:
+      # 1) 초기화 SQL 스크립트 전달
+      # - 왼쪽 : 호스트의 실제 폴더
+      # - 오른쪽 : 그 폴더가 컨테이너 안에서 보일 경로
+      # - 파일이 컨테이너 안으로 "복사"되는 게 아니라, 호스트에 있는 그 파일 하나를
+      #   컨테이너 안에서 "바로 읽는" 방식이다.
+
+      # /dcoker-entrypoint-initdb.d 는 MySQL 공식 이미지가 약속해둔 특별한 경로.
+      # 컨테이너가 시작될 때 이미지의 시작 스크립트가 이 경로를 열어보고,
+      # 안에 있는 *.sql을 파일명을 알파벳 순으로 자동 실행해준다.
+      # 딱 한 번만 실행된다. 컨테이너가 삭제되고 다시 만들어지면, 이 경로를 또 열어보지만
+      # 이미 데이터가 들어있으면 실행하지 않는다.
+      # * 순서가 중요하면 01-, 02- 이런 식으로 파일명을 붙여주면 된다. ex) 01-board.sql, 02-auth.sql,
+      - ./db:/docker-entrypoint-initdb.d:ro
+      # 2) DB 데이터 보관
+      # /var/lib/mysql 은 MySQL 이 데이터를 파일로 저장하는 폴더다(데이터 디렉토리)
+      # MySQL 은 논리 주소만 보고 쓰고, 그 요청을 Docker 가 물리 저장소로 돌려놓는다.
+      - mysql-data:/var/lib/mysql
+    
+    # 헬스체크
+    # - mysqladmin ping 으로 실제 MySQL 서버가 실제 응답 여부를 확인해서 healty / unhealthy 상태를 판단.
+    # - 다른 서비스에서 depends_on + codition: service_healthy 로 활용 가능
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-uroot", "-p1234"]
+      interval: 5s # 5초마다 체크
+      timeout: 3s # 3초 안에 응답 없으면 실패로 간주
+      retries: 20 # 20회 실패하면 unhealthy로 간주
+    
+    # 네트워크 설정
+    # - 이 컨테이너가 msa-network에 연결되도록 설정
+    # - 같은 네트워크에 있는 컨테이너끼리는 "서버스 이름"으로 서로를 찾을 수 있다. 
+    networks:
+      - msa-network
+
+# named volume 선언
+# - named volume은 컨테이너가 삭제되어도 데이터가 유지된다.
+volumes:
+  mysql-data: {}

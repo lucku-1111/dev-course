@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 340" width="1000" height="340" font-family="'Apple SD Gothic Neo','Malgun Gothic','Noto Sans KR',sans-serif">
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#757575"/></marker>
+  </defs>
+  <rect width="1000" height="340" fill="#FFFFFF"/>
+  <text x="500" y="32" text-anchor="middle" font-size="20" font-weight="bold" fill="#232F3E">인프라 만드는 순서 (앞 단계가 있어야 다음 단계를 만들 수 있다)</text>
+
+  <g font-size="13" text-anchor="middle">
+    <!-- row 1: network -->
+    <rect x="28" y="60" width="160" height="90" rx="10" fill="#EDE7F6" stroke="#8C4FFF" stroke-width="2"/>
+    <text x="108" y="100" font-size="16" font-weight="bold" fill="#232F3E">① VPC</text>
+    <text x="108" y="125" fill="#444">단지 울타리 만들기</text>
+    <rect x="224" y="60" width="160" height="90" rx="10" fill="#EDE7F6" stroke="#8C4FFF" stroke-width="2"/>
+    <text x="304" y="100" font-size="16" font-weight="bold" fill="#232F3E">② 서브넷 ×2</text>
+    <text x="304" y="125" fill="#444">public · private 구역</text>
+    <rect x="420" y="60" width="160" height="90" rx="10" fill="#EDE7F6" stroke="#8C4FFF" stroke-width="2"/>
+    <text x="500" y="100" font-size="16" font-weight="bold" fill="#232F3E">③ IGW + 연결</text>
+    <text x="500" y="125" fill="#444">정문 달기</text>
+    <rect x="616" y="60" width="160" height="90" rx="10" fill="#EDE7F6" stroke="#8C4FFF" stroke-width="2"/>
+    <text x="696" y="100" font-size="16" font-weight="bold" fill="#232F3E">④ public-rt</text>
+    <text x="696" y="125" fill="#444">0.0.0.0/0 → IGW</text>
+    <rect x="812" y="60" width="160" height="90" rx="10" fill="#EDE7F6" stroke="#8C4FFF" stroke-width="2"/>
+    <text x="892" y="100" font-size="16" font-weight="bold" fill="#232F3E">⑤ NAT GW</text>
+    <text x="892" y="125" fill="#444">public 쪽 + EIP</text>
+
+    <!-- row 2 -->
+    <rect x="28" y="210" width="160" height="90" rx="10" fill="#EDE7F6" stroke="#8C4FFF" stroke-width="2"/>
+    <text x="108" y="250" font-size="16" font-weight="bold" fill="#232F3E">⑥ private-rt</text>
+    <text x="108" y="275" fill="#444">0.0.0.0/0 → NAT</text>
+    <rect x="224" y="210" width="160" height="90" rx="10" fill="#FFF3E0" stroke="#FF9900" stroke-width="2"/>
+    <text x="304" y="250" font-size="16" font-weight="bold" fill="#232F3E">⑦ 보안그룹 ×2</text>
+    <text x="304" y="275" fill="#444">app-sg 먼저, db-sg 나중</text>
+    <rect x="420" y="210" width="160" height="90" rx="10" fill="#FFF3E0" stroke="#FF9900" stroke-width="2"/>
+    <text x="500" y="250" font-size="16" font-weight="bold" fill="#232F3E">⑧ EC2 ×2</text>
+    <text x="500" y="275" fill="#444">msa-app · msa-db</text>
+    <rect x="616" y="210" width="160" height="90" rx="10" fill="#FFF3E0" stroke="#FF9900" stroke-width="2"/>
+    <text x="696" y="250" font-size="16" font-weight="bold" fill="#232F3E">⑨ EIP 연결</text>
+    <text x="696" y="275" fill="#444">msa-app 고정 IP</text>
+    <rect x="812" y="210" width="160" height="90" rx="10" fill="#E8F5E9" stroke="#43A047" stroke-width="2"/>
+    <text x="892" y="250" font-size="16" font-weight="bold" fill="#232F3E">⑩ SSH + DB</text>
+    <text x="892" y="275" fill="#444">MySQL 설치 · 계정</text>
+  </g>
+
+  <g stroke="#757575" stroke-width="2.5" fill="none" marker-end="url(#a)">
+    <line x1="190" y1="105" x2="221" y2="105"/>
+    <line x1="386" y1="105" x2="417" y2="105"/>
+    <line x1="582" y1="105" x2="613" y2="105"/>
+    <line x1="778" y1="105" x2="809" y2="105"/>
+    <path d="M892 150 L892 180 L108 180 L108 207"/>
+    <line x1="190" y1="255" x2="221" y2="255"/>
+    <line x1="386" y1="255" x2="417" y2="255"/>
+    <line x1="582" y1="255" x2="613" y2="255"/>
+    <line x1="778" y1="255" x2="809" y2="255"/>
+  </g>
+
+  <g font-size="12">
+    <rect x="28" y="315" width="14" height="14" fill="#EDE7F6" stroke="#8C4FFF"/><text x="48" y="327" fill="#444">네트워크 (VPC 메뉴)</text>
+    <rect x="200" y="315" width="14" height="14" fill="#FFF3E0" stroke="#FF9900"/><text x="220" y="327" fill="#444">서버 · 방화벽 (EC2 메뉴)</text>
+    <rect x="390" y="315" width="14" height="14" fill="#E8F5E9" stroke="#43A047"/><text x="410" y="327" fill="#444">서버 안에서 작업 (터미널)</text>
+  </g>
+</svg>

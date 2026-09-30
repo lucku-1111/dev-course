@@ -1,0 +1,120 @@
+./gradlew clean
+빌드
+./gradlew bootJar -x test
+실행
+java -jar build/libs/*.jar
+한번에 실행
+./gradlew bootRun
+
+./gradlew --status
+./gradlew --stop
+
+*** 도커 ***
+=> config-service
+이미지 만들기
+docker build -t config-service:latest .
+
+컨테이너 실행
+컨테이너는 기본적으로 로컬을 못 본다.
+-v 는 그 벽에 구멍을 하나 뚫어서 로컬 폴더 하나만 보이게 한다.
+docker run -d --name config-service -p 8888:8888 \
+  -v /Users/kdw/Desktop/lect/msa/config-repo:/config-repo:ro \
+  -e CONFIG_REPO_PATH=file:/config-repo \
+  config-service:latest
+
+=> auth-serivice
+docker build -t auth-service:latest .
+
+docker run -d --name auth-service -p 8082:8082 \
+  -e CONFIG_SERVICE_URL="http://host.docker.internal:8888" \
+  -e DB_URL="jdbc:mysql://host.docker.internal:3306/board_auth?useSSL=false&serverTimezone=UTC&characterEncoding=UTF-8" \
+  -e BOARD_SERVICE_URL="http://host.docker.internal:8081" \
+  auth-service:latest
+
+=> board-service
+docker build -t board-service:latest .
+
+docker run -d --name board-service -p 8081:8081 \
+  -e CONFIG_SERVICE_URL="http://host.docker.internal:8888" \
+  -e DB_URL="jdbc:mysql://host.docker.internal:3306/board_app?useSSL=false&serverTimezone=UTC&characterEncoding=UTF-8" \
+  -e AUTH_SERVICE_URL="http://host.docker.internal:8082" \
+  board-service:latest
+
+=> edge-service
+docker build -t edge-service:latest .
+docker run -d --name edge-service -p 8000:8000 \
+  -e AUTH_SERVICE_URL=http://host.docker.internal:8082 \
+  -e BOARD_SERVICE_URL=http://host.docker.internal:8081 \
+  -e TRUSTED_PROXIES='.*' \
+edge-service:latest
+
+=> web-service
+docker build -t web-service:latest .
+
+docker run -d --name web-service -p 8080:8080 \
+  -e EDGE_SERVICE_URL=http://host.docker.internal:8000 \
+web-service:latest
+
+확인 
+- 떠있는 상태 : docker ps
+- 모든 상태 : docker ps -a
+
+로그확인
+docker logs -f config-service
+
+비우기(전체)
+docker system prune -a
+
+멈추기 
+docker stop [컨테이너ID]
+
+*** docker compose ***
+기동 (data -> service -> front)
+
+-f (= file) - 어떤 컴포즈 파일을 쓸지 지정
+-d (= detach) - 백그라운드 실행
+1) 데이터 (mas-network 생성 + MySQL)
+docker compose -f docker-compose.data.yml up -d
+
+2) 서비스 (config -> auth/board/edge)
+docker compose -f docker-compose.service.yml up -d --build
+
+3) 프론트 (web)
+docker compose -f docker-compose.front.yml up -d --build
+
+--build 는 소스가 바뀌었을 때 이미지를 다시 만든다.
+코드 수정 후 붙여야 반영된다.
+
+종료 (역순 - front -> service -> data)
+docker compose -f docker-compose.data.yml down
+docker compose -f docker-compose.service.yml down
+docker compose -f docker-compose.front.yml down
+
+완전 초기화 (DB 데이터까지 삭제)
+docker compose -f docker-compose.data.yml down -v
+docker compose -f docker-compose.service.yml down -v
+docker compose -f docker-compose.front.yml down -v
+
+상태 확인
+docker ps # 전체 컨테이너
+docker compose -f docker-compose.service.yml ps # 해당 파일만
+docker logs -f auth-service # 로그 확인
+docker compose -f docker-compose.service.yml log -f # 해당 파일 전체 로그
+
+개별 재시작
+docker compose -f docker-compose.service.yml restart auth-service
+# 코드 수정이 있었을 시
+docker compose -f docker-compose.service.yml up -d --build auth-service
+
+*** 쉘 스크립트 실행 권한 ***
+chmod +x start.sh
+chmod +x stop.sh
+
+*** 쉘 스크립트 실행 ***
+./start.sh
+./stop.sh
+
+
+
+
+

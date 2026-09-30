@@ -1,0 +1,111 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 810" width="1100" height="810" font-family="'Apple SD Gothic Neo','Malgun Gothic','Noto Sans KR',sans-serif">
+  <defs>
+    <marker id="k" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#232F3E"/></marker>
+    <marker id="o" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#EF6C00"/></marker>
+    <marker id="p" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#7B1FA2"/></marker>
+  </defs>
+  <rect width="1100" height="810" fill="#FFFFFF"/>
+
+  <!-- outside -->
+  <rect x="15" y="110" width="160" height="70" rx="10" fill="#F5F5F5" stroke="#9E9E9E"/>
+  <text x="95" y="140" text-anchor="middle" font-size="15" font-weight="bold" fill="#232F3E">사용자</text>
+  <text x="95" y="162" text-anchor="middle" font-size="12" fill="#666">(브라우저)</text>
+  <rect x="15" y="250" width="160" height="70" rx="10" fill="#F5F5F5" stroke="#9E9E9E"/>
+  <text x="95" y="280" text-anchor="middle" font-size="15" font-weight="bold" fill="#232F3E">관리자 PC</text>
+  <text x="95" y="302" text-anchor="middle" font-size="12" fill="#666">(내 노트북)</text>
+  <text x="95" y="215" text-anchor="middle" font-size="14" fill="#888">인터넷</text>
+
+  <!-- region / vpc -->
+  <rect x="205" y="15" width="880" height="725" rx="14" fill="none" stroke="#232F3E" stroke-width="2" stroke-dasharray="8 5"/>
+  <text x="225" y="42" font-size="15" font-weight="bold" fill="#232F3E">AWS 클라우드 · 서울 리전 (ap-northeast-2)</text>
+  <rect x="235" y="55" width="830" height="670" rx="12" fill="#FAFAFA" stroke="#8C4FFF" stroke-width="2"/>
+  <text x="255" y="80" font-size="15" font-weight="bold" fill="#8C4FFF">VPC  msa-vpc · 10.0.0.0/16</text>
+
+  <!-- public subnet -->
+  <rect x="320" y="100" width="720" height="240" rx="10" fill="#E8F5E9" stroke="#43A047" stroke-width="2"/>
+  <text x="340" y="124" font-size="14" font-weight="bold" fill="#2E7D32">Public Subnet  msa-public-a-subnet · 10.0.1.0/24</text>
+
+  <rect x="350" y="145" width="350" height="175" rx="10" fill="#FFFFFF" stroke="#FF9900" stroke-width="2"/>
+  <text x="525" y="175" text-anchor="middle" font-size="17" font-weight="bold" fill="#232F3E">EC2  msa-app</text>
+  <g font-size="13" fill="#444" text-anchor="middle">
+    <text x="525" y="200">Ubuntu 24.04 · t3.small</text>
+    <text x="525" y="222">탄력적 IP(EIP) = 고정 공인 IP</text>
+    <text x="525" y="244">Nginx :80 + Docker 서비스 5개</text>
+  </g>
+  <rect x="365" y="258" width="320" height="48" rx="6" fill="#FFF3E0" stroke="#FFB74D"/>
+  <text x="525" y="278" text-anchor="middle" font-size="12" font-weight="bold" fill="#E65100">보안 그룹 msa-app-sg</text>
+  <text x="525" y="296" text-anchor="middle" font-size="12" fill="#444">80 ← 전체 · 22 ← 내 IP만</text>
+
+  <rect x="770" y="145" width="240" height="80" rx="10" fill="#FFFFFF" stroke="#8C4FFF" stroke-width="2"/>
+  <text x="890" y="178" text-anchor="middle" font-size="15" font-weight="bold" fill="#232F3E">NAT Gateway msa-nat</text>
+  <text x="890" y="202" text-anchor="middle" font-size="12" fill="#444">+ EIP · 나가는 요청만 통과</text>
+
+  <rect x="770" y="245" width="240" height="75" rx="8" fill="#FFFFFF" stroke="#9E9E9E" stroke-dasharray="4 3"/>
+  <text x="890" y="270" text-anchor="middle" font-size="13" font-weight="bold" fill="#232F3E">msa-public-rt (라우팅)</text>
+  <text x="890" y="290" text-anchor="middle" font-size="12" fill="#444">10.0.0.0/16 → local</text>
+  <text x="890" y="308" text-anchor="middle" font-size="12" fill="#2E7D32" font-weight="bold">0.0.0.0/0 → IGW</text>
+
+  <!-- private subnet -->
+  <rect x="320" y="410" width="720" height="290" rx="10" fill="#E3F2FD" stroke="#1E88E5" stroke-width="2"/>
+  <text x="340" y="688" font-size="14" font-weight="bold" fill="#1565C0">Private Subnet  msa-private-a-subnet · 10.0.11.0/24</text>
+
+  <rect x="350" y="455" width="350" height="205" rx="10" fill="#FFFFFF" stroke="#FF9900" stroke-width="2"/>
+  <text x="525" y="485" text-anchor="middle" font-size="17" font-weight="bold" fill="#232F3E">EC2  msa-db</text>
+  <g font-size="13" fill="#444" text-anchor="middle">
+    <text x="525" y="510">Ubuntu 24.04 · t3.small · 공인 IP 없음</text>
+    <text x="525" y="532">MySQL :3306 (apt로 직접 설치)</text>
+    <text x="525" y="554">DB: board_auth, board_app</text>
+  </g>
+  <rect x="365" y="580" width="320" height="62" rx="6" fill="#FFF3E0" stroke="#FFB74D"/>
+  <text x="525" y="602" text-anchor="middle" font-size="12" font-weight="bold" fill="#E65100">보안 그룹 msa-db-sg</text>
+  <text x="525" y="622" text-anchor="middle" font-size="12" fill="#444">3306 · 22 ← msa-app-sg 에서만</text>
+
+  <rect x="770" y="455" width="240" height="95" rx="8" fill="#FFFFFF" stroke="#BBDEFB"/>
+  <text x="890" y="482" text-anchor="middle" font-size="13" font-weight="bold" fill="#1565C0">왜 private에?</text>
+  <text x="890" y="504" text-anchor="middle" font-size="12" fill="#444">인터넷에서 DB로</text>
+  <text x="890" y="522" text-anchor="middle" font-size="12" fill="#444">직접 들어올 수 없게 하려고</text>
+  <text x="890" y="540" text-anchor="middle" font-size="12" fill="#444">(나갈 땐 NAT를 통해서)</text>
+
+  <rect x="770" y="570" width="240" height="75" rx="8" fill="#FFFFFF" stroke="#9E9E9E" stroke-dasharray="4 3"/>
+  <text x="890" y="595" text-anchor="middle" font-size="13" font-weight="bold" fill="#232F3E">msa-private-rt (라우팅)</text>
+  <text x="890" y="615" text-anchor="middle" font-size="12" fill="#444">10.0.0.0/16 → local</text>
+  <text x="890" y="633" text-anchor="middle" font-size="12" fill="#6A1B9A" font-weight="bold">0.0.0.0/0 → NAT GW</text>
+
+  <!-- IGW on VPC edge -->
+  <rect x="195" y="180" width="100" height="60" rx="10" fill="#FFFFFF" stroke="#8C4FFF" stroke-width="2.5"/>
+  <text x="245" y="207" text-anchor="middle" font-size="15" font-weight="bold" fill="#232F3E">IGW</text>
+  <text x="245" y="227" text-anchor="middle" font-size="12" fill="#444">msa-igw</text>
+
+  <!-- arrows: inbound -->
+  <g stroke="#232F3E" stroke-width="2" fill="none" marker-end="url(#k)">
+    <path d="M175 145 L193 195"/>
+    <path d="M175 285 L193 228"/>
+    <path d="M295 210 L347 210"/>
+  </g>
+  <text x="120" y="98" font-size="12" fill="#232F3E">HTTP :80</text>
+  <text x="115" y="340" font-size="12" fill="#232F3E">SSH :22</text>
+
+  <!-- app to db -->
+  <g stroke="#1565C0" stroke-width="2.5" fill="none" marker-end="url(#k)">
+    <path d="M525 320 L525 452"/>
+  </g>
+  <rect x="535" y="360" width="150" height="26" rx="5" fill="#FFFFFF" stroke="#1565C0"/>
+  <text x="610" y="378" text-anchor="middle" font-size="12" fill="#1565C0" font-weight="bold">MySQL 3306 · SSH 22</text>
+
+  <!-- db -> NAT -> IGW outbound -->
+  <g stroke="#EF6C00" stroke-width="2" fill="none" stroke-dasharray="6 4" marker-end="url(#o)">
+    <path d="M700 480 L735 480 L735 185 L767 185"/>
+    <path d="M890 145 L890 90 L245 90 L245 177"/>
+  </g>
+  <text x="757" y="395" font-size="12" fill="#EF6C00" transform="rotate(-90 757 395)">apt 설치 (나가기만)</text>
+
+  <!-- legend -->
+  <g font-size="13" fill="#444">
+    <line x1="220" y1="775" x2="260" y2="775" stroke="#232F3E" stroke-width="2"/>
+    <text x="268" y="780">외부 → app (HTTP / SSH)</text>
+    <line x1="480" y1="775" x2="520" y2="775" stroke="#1565C0" stroke-width="2.5"/>
+    <text x="528" y="780">app → db (내부 통신)</text>
+    <line x1="710" y1="775" x2="750" y2="775" stroke="#EF6C00" stroke-width="2" stroke-dasharray="6 4"/>
+    <text x="758" y="780">db → NAT → IGW → 인터넷 (나가는 방향만)</text>
+  </g>
+</svg>

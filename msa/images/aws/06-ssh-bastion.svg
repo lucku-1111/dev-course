@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 300" width="1000" height="300" font-family="'Apple SD Gothic Neo','Malgun Gothic','Noto Sans KR',sans-serif">
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#232F3E"/></marker>
+  </defs>
+  <rect width="1000" height="300" fill="#FFFFFF"/>
+  <text x="500" y="32" text-anchor="middle" font-size="20" font-weight="bold" fill="#232F3E">SSH 접속 경로 — DB 서버는 app 서버를 거쳐서만 들어간다 (Bastion)</text>
+
+  <rect x="20" y="70" width="210" height="100" rx="10" fill="#F5F5F5" stroke="#9E9E9E" stroke-width="2"/>
+  <text x="125" y="105" text-anchor="middle" font-size="17" font-weight="bold" fill="#232F3E">내 PC (Mac)</text>
+  <text x="125" y="132" text-anchor="middle" font-size="12" fill="#444">~/Desktop/msa-key.pem</text>
+  <text x="125" y="152" text-anchor="middle" font-size="12" fill="#888">chmod 400 필수</text>
+
+  <rect x="390" y="70" width="220" height="100" rx="10" fill="#E8F5E9" stroke="#43A047" stroke-width="2"/>
+  <text x="500" y="105" text-anchor="middle" font-size="17" font-weight="bold" fill="#232F3E">msa-app (Bastion)</text>
+  <text x="500" y="132" text-anchor="middle" font-size="12" fill="#444">public · EIP 있음</text>
+  <text x="500" y="152" text-anchor="middle" font-size="12" fill="#888">~/msa-key.pem (scp로 복사)</text>
+
+  <rect x="770" y="70" width="210" height="100" rx="10" fill="#E3F2FD" stroke="#1E88E5" stroke-width="2"/>
+  <text x="875" y="105" text-anchor="middle" font-size="17" font-weight="bold" fill="#232F3E">msa-db</text>
+  <text x="875" y="132" text-anchor="middle" font-size="12" fill="#444">private · 공인 IP 없음</text>
+  <text x="875" y="152" text-anchor="middle" font-size="12" fill="#888">사설 IP 10.0.11.x</text>
+
+  <g stroke="#232F3E" stroke-width="2.5" marker-end="url(#a)">
+    <line x1="232" y1="120" x2="386" y2="120"/>
+    <line x1="612" y1="120" x2="766" y2="120"/>
+  </g>
+  <g font-size="12" text-anchor="middle">
+    <text x="310" y="108" fill="#232F3E" font-weight="bold">① ssh ubuntu@EIP</text>
+    <text x="310" y="142" fill="#E65100">SG: 22 ← 내 IP</text>
+    <text x="690" y="108" fill="#232F3E" font-weight="bold">② ssh ubuntu@10.0.11.x</text>
+    <text x="690" y="142" fill="#E65100">SG: 22 ← msa-app-sg</text>
+  </g>
+
+  <path d="M125 172 Q 500 300 875 172" stroke="#D32F2F" stroke-width="2" stroke-dasharray="6 5" fill="none"/>
+  <g stroke="#D32F2F" stroke-width="4">
+    <line x1="488" y1="224" x2="512" y2="248"/>
+    <line x1="512" y1="224" x2="488" y2="248"/>
+  </g>
+  <text x="500" y="282" text-anchor="middle" font-size="13" fill="#C62828" font-weight="bold">내 PC → msa-db 직접 접속 불가 (공인 IP가 없고, 보안그룹도 막음)</text>
+</svg>

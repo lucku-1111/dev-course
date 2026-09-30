@@ -1,0 +1,103 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 560" width="1100" height="560" font-family="'Apple SD Gothic Neo','Malgun Gothic','Noto Sans KR',sans-serif">
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#232F3E"/></marker>
+  </defs>
+  <rect width="1100" height="560" fill="#FFFFFF"/>
+  <text x="550" y="32" text-anchor="middle" font-size="20" font-weight="bold" fill="#232F3E">배포 흐름 — 코드 수정부터 서버 반영까지 (./deploy.sh)</text>
+
+  <!-- PC -->
+  <rect x="20" y="70" width="170" height="80" rx="10" fill="#F5F5F5" stroke="#9E9E9E" stroke-width="2"/>
+  <text x="105" y="102" text-anchor="middle" font-size="16" font-weight="bold" fill="#232F3E">내 PC</text>
+  <text x="105" y="126" text-anchor="middle" font-size="12" fill="#444">코드 수정 → git push</text>
+  <!-- GitHub -->
+  <rect x="20" y="220" width="170" height="80" rx="10" fill="#F5F5F5" stroke="#424242" stroke-width="2"/>
+  <text x="105" y="252" text-anchor="middle" font-size="16" font-weight="bold" fill="#232F3E">GitHub</text>
+  <text x="105" y="276" text-anchor="middle" font-size="12" fill="#444">최신 소스 보관</text>
+  <line x1="105" y1="150" x2="105" y2="217" stroke="#232F3E" stroke-width="2.5" marker-end="url(#a)"/>
+  <text x="115" y="190" font-size="12" fill="#232F3E">push</text>
+
+  <!-- msa-app -->
+  <rect x="250" y="55" width="830" height="490" rx="14" fill="#E8F5E9" stroke="#43A047" stroke-width="2"/>
+  <text x="270" y="82" font-size="16" font-weight="bold" fill="#2E7D32">EC2 msa-app · ~/app/docker 폴더</text>
+
+  <!-- steps -->
+  <g font-size="12" text-anchor="middle">
+    <rect x="275" y="100" width="185" height="80" rx="10" fill="#FFFFFF" stroke="#FF9900" stroke-width="2"/>
+    <text x="367" y="127" font-size="14" font-weight="bold" fill="#232F3E">[1] git pull --ff-only</text>
+    <text x="367" y="150" fill="#444">GitHub 최신 코드 받기</text>
+    <text x="367" y="168" fill="#888">서버에서 코드 고쳤으면 실패</text>
+
+    <rect x="480" y="100" width="185" height="80" rx="10" fill="#FFFFFF" stroke="#FF9900" stroke-width="2"/>
+    <text x="572" y="127" font-size="14" font-weight="bold" fill="#232F3E">[2] build (하나씩)</text>
+    <text x="572" y="150" fill="#444">서비스별 이미지 빌드</text>
+    <text x="572" y="168" fill="#888">동시에 하면 메모리 부족</text>
+
+    <rect x="685" y="100" width="185" height="80" rx="10" fill="#FFFFFF" stroke="#FF9900" stroke-width="2"/>
+    <text x="777" y="127" font-size="14" font-weight="bold" fill="#232F3E">[3] up -d</text>
+    <text x="777" y="150" fill="#444">새 이미지로 컨테이너 교체</text>
+    <text x="777" y="168" fill="#888">바뀐 서비스만 재생성</text>
+
+    <rect x="890" y="100" width="170" height="80" rx="10" fill="#FFFFFF" stroke="#FF9900" stroke-width="2"/>
+    <text x="975" y="127" font-size="14" font-weight="bold" fill="#232F3E">[4] image prune</text>
+    <text x="975" y="150" fill="#444">옛 이미지 삭제</text>
+    <text x="975" y="168" fill="#888">디스크(8GB) 절약</text>
+  </g>
+  <g stroke="#232F3E" stroke-width="2.5" marker-end="url(#a)">
+    <path d="M190 260 L230 260 L230 140 L272 140" fill="none"/>
+    <line x1="460" y1="140" x2="477" y2="140"/>
+    <line x1="665" y1="140" x2="682" y2="140"/>
+    <line x1="870" y1="140" x2="887" y2="140"/>
+  </g>
+  <text x="236" y="210" font-size="12" fill="#232F3E">pull</text>
+
+  <!-- config files -->
+  <g font-size="12">
+    <rect x="275" y="205" width="250" height="100" rx="8" fill="#FFFFFF" stroke="#8C4FFF"/>
+    <text x="290" y="228" font-size="13" font-weight="bold" fill="#6A1B9A">.env  (chmod 600, Git에 안 올림)</text>
+    <text x="290" y="250" fill="#444">PUBLIC_HOST=&lt;EIP&gt;</text>
+    <text x="290" y="268" fill="#444">DB_HOST=10.0.11.x  DB_USER=app ...</text>
+    <text x="290" y="286" fill="#444">JAVA_OPTS=-Xmx256m ...</text>
+
+    <rect x="545" y="205" width="250" height="100" rx="8" fill="#FFFFFF" stroke="#8C4FFF"/>
+    <text x="560" y="228" font-size="13" font-weight="bold" fill="#6A1B9A">docker-compose.aws.yml</text>
+    <text x="560" y="250" fill="#444">${DB_HOST} 처럼 .env 값을 끼워 씀</text>
+    <text x="560" y="268" fill="#444">restart: unless-stopped</text>
+    <text x="560" y="286" fill="#444">MySQL 컨테이너 없음 (msa-db 사용)</text>
+  </g>
+  <line x1="525" y1="255" x2="542" y2="255" stroke="#8C4FFF" stroke-width="2" marker-end="url(#a)"/>
+
+  <!-- network -->
+  <rect x="275" y="330" width="785" height="195" rx="10" fill="#FFFFFF" stroke="#1E88E5" stroke-width="2" stroke-dasharray="6 4"/>
+  <text x="295" y="355" font-size="14" font-weight="bold" fill="#1565C0">Docker 네트워크 msa-network</text>
+
+  <g font-size="12" text-anchor="middle">
+    <rect x="300" y="375" width="160" height="60" rx="8" fill="#FFF3E0" stroke="#FF9900"/>
+    <text x="380" y="400" font-weight="bold" fill="#232F3E">web-service</text>
+    <text x="380" y="420" fill="#E65100">127.0.0.1:8080</text>
+    <rect x="485" y="375" width="160" height="60" rx="8" fill="#FFF3E0" stroke="#FF9900"/>
+    <text x="565" y="400" font-weight="bold" fill="#232F3E">edge-service</text>
+    <text x="565" y="420" fill="#E65100">127.0.0.1:8000</text>
+
+    <rect x="300" y="450" width="160" height="55" rx="8" fill="#F5F5F5" stroke="#9E9E9E"/>
+    <text x="380" y="473" font-weight="bold" fill="#232F3E">config-service</text>
+    <text x="380" y="492" fill="#666">:8888 · 비공개</text>
+    <rect x="485" y="450" width="160" height="55" rx="8" fill="#F5F5F5" stroke="#9E9E9E"/>
+    <text x="565" y="473" font-weight="bold" fill="#232F3E">auth-service</text>
+    <text x="565" y="492" fill="#666">:8082 · 비공개</text>
+    <rect x="670" y="450" width="160" height="55" rx="8" fill="#F5F5F5" stroke="#9E9E9E"/>
+    <text x="750" y="473" font-weight="bold" fill="#232F3E">board-service</text>
+    <text x="750" y="492" fill="#666">:8081 · 비공개</text>
+  </g>
+
+  <g font-size="12" fill="#444">
+    <text x="670" y="390">● 주황: 서버 안(127.0.0.1)에서만 접속 가능</text>
+    <text x="670" y="410">   → 나중에 Nginx(:80)가 여기로 연결</text>
+    <text x="670" y="430">● 회색: ports 없음, 컨테이너끼리만 호출</text>
+  </g>
+
+  <!-- to db -->
+  <rect x="870" y="450" width="175" height="55" rx="8" fill="#E3F2FD" stroke="#1E88E5" stroke-width="2"/>
+  <text x="957" y="473" text-anchor="middle" font-size="12" font-weight="bold" fill="#1565C0">→ msa-db EC2 (서버 밖)</text>
+  <text x="957" y="492" text-anchor="middle" font-size="12" fill="#444">${DB_HOST}:3306</text>
+  <line x1="830" y1="477" x2="867" y2="477" stroke="#1565C0" stroke-width="2" marker-end="url(#a)"/>
+</svg>

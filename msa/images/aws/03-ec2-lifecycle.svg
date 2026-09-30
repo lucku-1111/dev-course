@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 400" width="1000" height="400" font-family="'Apple SD Gothic Neo','Malgun Gothic','Noto Sans KR',sans-serif">
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#555"/>
+    </marker>
+  </defs>
+  <rect width="1000" height="400" fill="#FFFFFF"/>
+  <text x="500" y="32" text-anchor="middle" font-size="20" font-weight="bold" fill="#232F3E">EC2 인스턴스 상태와 요금</text>
+
+  <!-- states -->
+  <rect x="30" y="70" width="160" height="70" rx="10" fill="#F5F5F5" stroke="#9E9E9E" stroke-width="2"/>
+  <text x="110" y="100" text-anchor="middle" font-size="17" font-weight="bold" fill="#232F3E">대기 중</text>
+  <text x="110" y="124" text-anchor="middle" font-size="13" fill="#666">pending · 부팅 중</text>
+
+  <rect x="280" y="70" width="200" height="70" rx="10" fill="#E8F5E9" stroke="#43A047" stroke-width="2"/>
+  <text x="380" y="100" text-anchor="middle" font-size="17" font-weight="bold" fill="#2E7D32">실행 중 (running)</text>
+  <text x="380" y="124" text-anchor="middle" font-size="13" fill="#444">요금 발생 (초 단위)</text>
+
+  <rect x="600" y="70" width="300" height="70" rx="10" fill="#FFF8E1" stroke="#F9A825" stroke-width="2"/>
+  <text x="750" y="100" text-anchor="middle" font-size="17" font-weight="bold" fill="#F57F17">중지됨 (stopped)</text>
+  <text x="750" y="124" text-anchor="middle" font-size="13" fill="#444">서버 요금 X · 디스크(EBS)·EIP 요금 O</text>
+
+  <rect x="480" y="260" width="240" height="70" rx="10" fill="#FFEBEE" stroke="#D32F2F" stroke-width="2"/>
+  <text x="600" y="290" text-anchor="middle" font-size="17" font-weight="bold" fill="#C62828">종료됨 (terminated)</text>
+  <text x="600" y="314" text-anchor="middle" font-size="13" fill="#C62828">삭제됨 · 복구 불가!</text>
+
+  <!-- transitions -->
+  <g stroke="#555" stroke-width="2" fill="none" marker-end="url(#a)" font-size="13">
+    <line x1="190" y1="105" x2="277" y2="105"/>
+    <line x1="480" y1="92" x2="597" y2="92"/>
+    <line x1="600" y1="120" x2="483" y2="120"/>
+    <line x1="400" y1="140" x2="530" y2="257"/>
+    <line x1="760" y1="140" x2="660" y2="257"/>
+  </g>
+  <g font-size="13" fill="#333" text-anchor="middle">
+    <text x="233" y="96">시작</text>
+    <text x="540" y="84">중지 (Stop)</text>
+    <text x="540" y="138">시작 (Start)</text>
+    <text x="445" y="198" text-anchor="end">종료 (Terminate)</text>
+    <text x="770" y="210">종료 (Terminate)</text>
+  </g>
+
+  <!-- notes -->
+  <rect x="30" y="220" width="400" height="160" rx="10" fill="#FAFAFA" stroke="#E0E0E0"/>
+  <text x="50" y="248" font-size="15" font-weight="bold" fill="#232F3E">알아두기</text>
+  <g font-size="13" fill="#444">
+    <text x="50" y="275">• 재부팅(Reboot): IP 그대로, 요금 계속</text>
+    <text x="50" y="300">• 중지 → 시작: 공인 IP가 바뀜 (EIP는 유지)</text>
+    <text x="50" y="325" fill="#C62828">• "종료"는 삭제! "중지"와 헷갈리지 말기</text>
+    <text x="50" y="350">• 잠깐 쉴 땐 중지, 실습이 완전히 끝나면 종료</text>
+  </g>
+</svg>

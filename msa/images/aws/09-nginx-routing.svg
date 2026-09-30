@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 530" width="1100" height="530" font-family="'Apple SD Gothic Neo','Malgun Gothic','Noto Sans KR',sans-serif">
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#232F3E"/></marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#2E7D32"/></marker>
+    <marker id="o" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#E65100"/></marker>
+  </defs>
+  <rect width="1100" height="530" fill="#FFFFFF"/>
+  <text x="550" y="32" text-anchor="middle" font-size="20" font-weight="bold" fill="#232F3E">Nginx = 대문 겸 안내 데스크 — 주소를 보고 어느 서비스로 보낼지 정한다</text>
+
+  <!-- browser -->
+  <rect x="15" y="180" width="150" height="80" rx="10" fill="#F5F5F5" stroke="#9E9E9E" stroke-width="2"/>
+  <text x="90" y="212" text-anchor="middle" font-size="16" font-weight="bold" fill="#232F3E">브라우저</text>
+  <text x="90" y="236" text-anchor="middle" font-size="12" fill="#444">http://&lt;EIP&gt;</text>
+
+  <!-- msa-app -->
+  <rect x="190" y="55" width="895" height="345" rx="14" fill="#FAFAFA" stroke="#43A047" stroke-width="2"/>
+  <text x="210" y="80" font-size="15" font-weight="bold" fill="#2E7D32">EC2 msa-app</text>
+
+  <!-- nginx -->
+  <rect x="235" y="120" width="250" height="200" rx="12" fill="#E8F5E9" stroke="#43A047" stroke-width="2.5"/>
+  <text x="360" y="150" text-anchor="middle" font-size="17" font-weight="bold" fill="#232F3E">Nginx :80</text>
+  <text x="360" y="170" text-anchor="middle" font-size="12" fill="#666">호스트에 apt로 설치 (컨테이너 X)</text>
+  <g font-size="12" fill="#444">
+    <text x="252" y="198">• 최대 업로드 10MB</text>
+    <text x="252" y="218">• X-Forwarded-* 헤더 붙이기</text>
+    <text x="262" y="236" fill="#888">(원래 주소 = EIP 를 뒤로 전달)</text>
+    <text x="252" y="262" font-weight="bold" fill="#232F3E">location 으로 길 안내:</text>
+    <text x="252" y="282" fill="#E65100">/oauth2/ · /login/oauth2/ → 8000</text>
+    <text x="252" y="302" fill="#2E7D32">/ (나머지 전부) → 8080</text>
+  </g>
+
+  <!-- web -->
+  <rect x="600" y="120" width="210" height="90" rx="10" fill="#FFF3E0" stroke="#FF9900" stroke-width="2"/>
+  <text x="705" y="150" text-anchor="middle" font-size="15" font-weight="bold" fill="#232F3E">web-service</text>
+  <text x="705" y="172" text-anchor="middle" font-size="12" fill="#E65100">127.0.0.1:8080</text>
+  <text x="705" y="193" text-anchor="middle" font-size="12" fill="#444">화면 + /api/** (BFF)</text>
+
+  <!-- edge -->
+  <rect x="600" y="270" width="210" height="90" rx="10" fill="#FFF3E0" stroke="#FF9900" stroke-width="2"/>
+  <text x="705" y="300" text-anchor="middle" font-size="15" font-weight="bold" fill="#232F3E">edge-service</text>
+  <text x="705" y="322" text-anchor="middle" font-size="12" fill="#E65100">127.0.0.1:8000</text>
+  <text x="705" y="343" text-anchor="middle" font-size="12" fill="#444">게이트웨이</text>
+
+  <!-- auth / board -->
+  <rect x="900" y="230" width="160" height="60" rx="8" fill="#F5F5F5" stroke="#9E9E9E"/>
+  <text x="980" y="256" text-anchor="middle" font-size="14" font-weight="bold" fill="#232F3E">auth-service</text>
+  <text x="980" y="276" text-anchor="middle" font-size="12" fill="#666">:8082 · 로그인</text>
+  <rect x="900" y="320" width="160" height="60" rx="8" fill="#F5F5F5" stroke="#9E9E9E"/>
+  <text x="980" y="346" text-anchor="middle" font-size="14" font-weight="bold" fill="#232F3E">board-service</text>
+  <text x="980" y="366" text-anchor="middle" font-size="12" fill="#666">:8081 · 게시판</text>
+
+  <!-- arrows -->
+  <path d="M485 185 L597 165" stroke="#2E7D32" stroke-width="2.5" fill="none" marker-end="url(#g)"/>
+  <text x="540" y="163" text-anchor="middle" font-size="12" fill="#2E7D32" font-weight="bold">① 대부분</text>
+  <path d="M485 285 L597 310" stroke="#E65100" stroke-width="2.5" fill="none" marker-end="url(#o)"/>
+  <text x="540" y="336" text-anchor="middle" font-size="12" fill="#E65100" font-weight="bold">② 카카오 로그인</text>
+  <path d="M705 210 L705 267" stroke="#232F3E" stroke-width="2" fill="none" stroke-dasharray="5 4" marker-end="url(#a)"/>
+  <text x="715" y="244" font-size="12" fill="#232F3E">Feign 중계</text>
+  <path d="M810 305 L897 265" stroke="#232F3E" stroke-width="2" fill="none" marker-end="url(#a)"/>
+  <path d="M810 330 L897 348" stroke="#232F3E" stroke-width="2" fill="none" marker-end="url(#a)"/>
+
+  <g font-size="13" fill="#444">
+    <text x="30" y="440">① 화면·게시판·API: 브라우저 → Nginx → web → (Feign) edge → auth/board</text>
+    <text x="30" y="462">② 카카오 로그인: 브라우저 → Nginx → edge → auth  (카카오가 브라우저를 돌려보낼 주소가 필요해서 직접)</text>
+    <text x="30" y="484">→ 외부에 열린 문은 Nginx :80 하나뿐. 8080 · 8000은 127.0.0.1 이라 밖에서 못 들어온다</text>
+    <text x="30" y="506" fill="#C62828">→ 카카오 개발자 콘솔 Redirect URI: http://&lt;EIP&gt;/login/oauth2/code/kakao 등록 필수</text>
+  </g>
+  <line x1="165" y1="220" x2="232" y2="220" stroke="#232F3E" stroke-width="2.5" marker-end="url(#a)"/>
+  <text x="177" y="240" text-anchor="middle" font-size="12" font-weight="bold" fill="#232F3E">:80</text>
+</svg>
